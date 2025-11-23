@@ -1,0 +1,76 @@
+{
+  "tasks": [
+    {
+      "id": "migration-task",
+      "name": "Migration Task",
+      "description": "Execute migration operations using IBM Watsonx",
+      "tool": "migration",
+      "enabled": true,
+      "config": {
+        "modelId": "ibm/granite-13b-chat-v2"
+      }
+    },
+    {
+      "id": "lint-task",
+      "name": "Lint Task",
+      "description": "Perform code linting and quality checks",
+      "tool": "lint",
+      "enabled": true,
+      "config": {
+        "modelId": "ibm/granite-13b-chat-v2"
+      }
+    },
+    {
+      "id": "run-changes-task",
+      "name": "Run Changes Task",
+      "description": "Apply code changes and transformations",
+      "tool": "run-changes",
+      "enabled": true,
+      "config": {
+        "modelId": "ibm/granite-13b-chat-v2"
+      }
+    },
+    {
+      "id": "validate-task",
+      "name": "Validate Task",
+      "description": "Validate code and configurations",
+      "tool": "validate",
+      "enabled": true,
+      "config": {
+        "modelId": "ibm/granite-13b-chat-v2"
+      }
+    },
+    {
+      "id": "watsonx-llm-task",
+      "name": "Watsonx LLM Task",
+      "description": "Direct interaction with Watsonx LLM",
+      "tool": "watsonx_llm",
+      "enabled": true,
+      "config": {
+        "modelId": "ibm/granite-13b-chat-v2",
+        "useSample": false
+      }
+    }
+  ],
+  "workflows": [
+    {
+      "id": "full-migration-workflow",
+      "name": "Full Migration Workflow",
+      "description": "Complete migration workflow: migrate -> lint -> validate",
+      "steps": [
+        {
+          "taskId": "migration-task",
+          "order": 1
+        },
+        {
+          "taskId": "lint-task",
+          "order": 2
+        },
+        {
+          "taskId": "validate-task",
+          "order": 3
+        }
+      ]
+    }
+  ]
+}

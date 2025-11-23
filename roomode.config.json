@@ -1,0 +1,124 @@
+{
+  "name": "mcp-migration-tools-server",
+  "version": "1.0.0",
+  "description": "MCP Server for migration tools with IBM Watsonx integration",
+  "server": {
+    "name": "migration-tools",
+    "version": "1.0.0",
+    "transport": "stdio"
+  },
+  "tools": [
+    {
+      "name": "migration",
+      "description": "Tool for handling migration operations",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "params": {
+            "type": "object",
+            "description": "Migration-specific parameters"
+          },
+          "modelId": {
+            "type": "string",
+            "description": "IBM Watsonx model ID to use"
+          }
+        }
+      }
+    },
+    {
+      "name": "lint",
+      "description": "Tool for linting and code quality checks",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "params": {
+            "type": "object",
+            "description": "Lint-specific parameters"
+          },
+          "modelId": {
+            "type": "string",
+            "description": "IBM Watsonx model ID to use"
+          }
+        }
+      }
+    },
+    {
+      "name": "run-changes",
+      "description": "Tool for running and applying changes",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "params": {
+            "type": "object",
+            "description": "Run-changes specific parameters"
+          },
+          "modelId": {
+            "type": "string",
+            "description": "IBM Watsonx model ID to use"
+          }
+        }
+      }
+    },
+    {
+      "name": "validate",
+      "description": "Tool for validation operations",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "params": {
+            "type": "object",
+            "description": "Validation-specific parameters"
+          },
+          "modelId": {
+            "type": "string",
+            "description": "IBM Watsonx model ID to use"
+          }
+        }
+      }
+    },
+    {
+      "name": "watsonx_llm",
+      "description": "Tool for direct interaction with Watsonx LLM",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "prompt": {
+            "type": "string",
+            "description": "The prompt to send to the model"
+          },
+          "useSample": {
+            "type": "boolean",
+            "description": "Use the sample prompt from file"
+          },
+          "modelId": {
+            "type": "string",
+            "description": "IBM Watsonx model ID to use"
+          }
+        }
+      }
+    }
+  ],
+  "environment": {
+    "WATSONX_URL": {
+      "required": false,
+      "description": "IBM Watsonx service URL"
+    },
+    "WATSONX_VERSION": {
+      "required": false,
+      "description": "IBM Watsonx API version"
+    },
+    "WATSONX_PROJECT_ID": {
+      "required": true,
+      "description": "IBM Watsonx project ID"
+    },
+    "WATSONX_API_KEY": {
+      "required": true,
+      "description": "IBM Watsonx API key",
+      "secret": true
+    },
+    "WATSONX_MODEL_ID": {
+      "required": false,
+      "description": "Default model ID to use"
+    }
+  }
+}

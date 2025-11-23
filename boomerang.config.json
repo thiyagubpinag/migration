@@ -1,0 +1,70 @@
+{
+  "name": "mcp-migration-tools",
+  "version": "1.0.0",
+  "description": "MCP tool modules for migration tasks with IBM Watsonx integration",
+  "type": "task",
+  "category": "migration",
+  "runtime": "node",
+  "entrypoint": "index.js",
+  "parameters": [
+    {
+      "name": "tool",
+      "type": "string",
+      "required": true,
+      "description": "Tool to execute (migration, lint, run-changes, validate)",
+      "enum": ["migration", "lint", "run-changes", "validate", "watsonx_llm"]
+    },
+    {
+      "name": "modelId",
+      "type": "string",
+      "required": false,
+      "description": "IBM Watsonx model ID to use",
+      "default": "ibm/granite-13b-chat-v2"
+    },
+    {
+      "name": "projectId",
+      "type": "string",
+      "required": false,
+      "description": "IBM Watsonx project ID (overrides env var)"
+    },
+    {
+      "name": "params",
+      "type": "object",
+      "required": false,
+      "description": "Tool-specific parameters"
+    }
+  ],
+  "environment": {
+    "WATSONX_URL": {
+      "required": false,
+      "description": "IBM Watsonx service URL"
+    },
+    "WATSONX_VERSION": {
+      "required": false,
+      "description": "IBM Watsonx API version"
+    },
+    "WATSONX_PROJECT_ID": {
+      "required": true,
+      "description": "IBM Watsonx project ID"
+    },
+    "WATSONX_API_KEY": {
+      "required": true,
+      "description": "IBM Watsonx API key",
+      "secret": true
+    },
+    "WATSONX_MODEL_ID": {
+      "required": false,
+      "description": "Default model ID to use"
+    }
+  },
+  "outputs": [
+    {
+      "name": "result",
+      "type": "object",
+      "description": "Tool execution result"
+    }
+  ],
+  "tags": ["mcp", "migration", "watsonx", "langchain", "ai"],
+  "author": "ROO Team",
+  "license": "ISC"
+}
