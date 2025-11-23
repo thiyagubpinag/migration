@@ -74,7 +74,7 @@ WATSONX_URL=https://us-south.ml.cloud.ibm.com
 WATSONX_VERSION=2024-05-31
 WATSONX_PROJECT_ID=your-project-id-here
 WATSONX_API_KEY=your-api-key-here
-WATSONX_MODEL_ID=ibm/granite-13b-chat-v2
+WATSONX_MODEL_ID=mistralai/mistral-medium-2505
 ```
 
 ### Model Configuration
@@ -130,7 +130,7 @@ The repository is configured to run as a Boomerang task in the ROO environment. 
 ```json
 {
   "tool": "migration",
-  "modelId": "ibm/granite-13b-chat-v2",
+  "modelId": "mistralai/mistral-medium-2505",
   "params": {
     "source": "legacy-code.js",
     "target": "modern-code.js"

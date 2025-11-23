@@ -122,7 +122,7 @@ WATSONX_URL=https://us-south.ml.cloud.ibm.com
 WATSONX_VERSION=2024-05-31
 WATSONX_PROJECT_ID=your-project-id-here
 WATSONX_API_KEY=your-api-key-here
-WATSONX_MODEL_ID=ibm/granite-13b-chat-v2
+WATSONX_MODEL_ID=mistralai/mistral-medium-2505
 ```
 
 ### MCP Server Settings (`.roo/mcp.json`)

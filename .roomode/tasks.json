@@ -7,7 +7,7 @@
       "tool": "migration",
       "enabled": true,
       "config": {
-        "modelId": "ibm/granite-13b-chat-v2"
+        "modelId": "mistralai/mistral-medium-2505"
       }
     },
     {
@@ -17,7 +17,7 @@
       "tool": "lint",
       "enabled": true,
       "config": {
-        "modelId": "ibm/granite-13b-chat-v2"
+        "modelId": "mistralai/mistral-medium-2505"
       }
     },
     {
@@ -27,7 +27,7 @@
       "tool": "run-changes",
       "enabled": true,
       "config": {
-        "modelId": "ibm/granite-13b-chat-v2"
+        "modelId": "mistralai/mistral-medium-2505"
       }
     },
     {
@@ -37,7 +37,7 @@
       "tool": "validate",
       "enabled": true,
       "config": {
-        "modelId": "ibm/granite-13b-chat-v2"
+        "modelId": "mistralai/mistral-medium-2505"
       }
     },
     {
@@ -47,7 +47,7 @@
       "tool": "watsonx_llm",
       "enabled": true,
       "config": {
-        "modelId": "ibm/granite-13b-chat-v2",
+        "modelId": "mistralai/mistral-medium-2505",
         "useSample": false
       }
     }

@@ -18,7 +18,7 @@ export const watsonxConfig = {
   version: process.env.WATSONX_VERSION || "2024-05-31",
   projectId: process.env.WATSONX_PROJECT_ID,
   apiKey: process.env.WATSONX_API_KEY,
-  modelId: process.env.WATSONX_MODEL_ID || "ibm/granite-13b-chat-v2",
+  modelId: process.env.WATSONX_MODEL_ID || "mistralai/mistral-medium-2505",
 };
 
 /**

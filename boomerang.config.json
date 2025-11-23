@@ -19,7 +19,7 @@
       "type": "string",
       "required": false,
       "description": "IBM Watsonx model ID to use",
-      "default": "ibm/granite-13b-chat-v2"
+      "default": "mistralai/mistral-medium-2505"
     },
     {
       "name": "projectId",
