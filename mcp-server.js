@@ -151,17 +151,34 @@ class MigrationToolsServer {
       };
     });
 
-    // Handle tool calls
+    // Handle tool calls with timeout
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const { name, arguments: args } = request.params;
 
       try {
+        // Get timeout from environment or use default (5 minutes)
+        const timeoutMs = parseInt(process.env.MCP_TIMEOUT || '300000', 10);
+        
+        console.error(`[MCP] Executing tool: ${name} with timeout: ${timeoutMs}ms`);
+
+        // Create timeout promise
+        const timeoutPromise = new Promise((_, reject) => {
+          setTimeout(() => {
+            reject(new Error(`Operation timed out after ${timeoutMs}ms. For long-running migrations, consider using direct Node.js execution.`));
+          }, timeoutMs);
+        });
+
         // Create tool instance with custom config if modelId provided
         const config = args?.modelId ? { modelId: args.modelId } : {};
         const tool = createTool(name, config);
 
-        // Execute the tool
-        const result = await tool.execute(args?.params || args || {});
+        // Execute the tool with timeout
+        const executionPromise = tool.execute(args?.params || args || {});
+        
+        // Race between execution and timeout
+        const result = await Promise.race([executionPromise, timeoutPromise]);
+
+        console.error(`[MCP] Tool ${name} completed successfully`);
 
         return {
           content: [
@@ -172,6 +189,11 @@ class MigrationToolsServer {
           ],
         };
       } catch (error) {
+        console.error(`[MCP] Tool ${name} failed:`, error.message);
+        
+        // Check if it's a timeout error
+        const isTimeout = error.message.includes('timed out');
+        
         return {
           content: [
             {
@@ -181,6 +203,10 @@ class MigrationToolsServer {
                   success: false,
                   error: error.message,
                   tool: name,
+                  isTimeout,
+                  suggestion: isTimeout
+                    ? 'Try using direct Node.js execution: node -e "import(\'./tools/migration/index.js\').then(async ({ MigrationTool }) => { ... })"'
+                    : 'Check the error message for details',
                 },
                 null,
                 2

@@ -22,21 +22,48 @@ export class AIRecommender {
     const prompt = this.buildPrompt(analysis, legacyCode, modernCode);
     
     try {
-      const response = await this.model.invoke(prompt);
+      console.log('[AI Recommender] Generating recommendations...');
+      const startTime = Date.now();
+      
+      // Create timeout promise (2 minutes for AI call)
+      const timeoutMs = 120000;
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => {
+          reject(new Error(`AI model timeout after ${timeoutMs}ms`));
+        }, timeoutMs);
+      });
+      
+      // Race between AI call and timeout
+      const response = await Promise.race([
+        this.model.invoke(prompt),
+        timeoutPromise
+      ]);
+      
+      const duration = Date.now() - startTime;
+      console.log(`[AI Recommender] Completed in ${duration}ms`);
+      
       const recommendations = this.parseAIResponse(response.content);
       
       return {
         success: true,
         recommendations,
         confidence: this.calculateConfidence(recommendations),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        duration
       };
     } catch (error) {
-      console.error('AI recommendation generation failed:', error);
+      console.error('[AI Recommender] Failed:', error.message);
+      
+      // If timeout or AI fails, use fallback
+      const fallback = this.generateFallbackRecommendations(analysis);
+      
       return {
         success: false,
         error: error.message,
-        fallbackRecommendations: this.generateFallbackRecommendations(analysis)
+        usingFallback: true,
+        recommendations: fallback,
+        confidence: 0.6,
+        timestamp: new Date().toISOString()
       };
     }
   }

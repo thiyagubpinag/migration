@@ -5,9 +5,11 @@
       "args": [
         "mcp-server.js"
       ],
+      "timeout": 300000,
       "env": {
         "WATSONX_URL": "https://us-south.ml.cloud.ibm.com",
-        "WATSONX_VERSION": "2024-05-31"
+        "WATSONX_VERSION": "2024-05-31",
+        "MCP_TIMEOUT": "300000"
       }
     }
   }
