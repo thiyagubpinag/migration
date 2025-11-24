@@ -1,5 +1,8 @@
 import dotenv from "dotenv";
 import MigrationTool from "./tools/migration/index.js";
+import CodeAnalyzerTool from "./tools/code-analyzer-tool/index.js";
+import CodeRecommendationTool from "./tools/code-recommendation-tool/index.js";
+import CodeMigratorTool from "./tools/code-migrator-tool/index.js";
 import LintTool from "./tools/lint/index.js";
 import RunChangesTool from "./tools/run-changes/index.js";
 import ValidateTool from "./tools/validate/index.js";
@@ -15,13 +18,25 @@ dotenv.config();
  * Exports all tool modules for use in Boomerang tasks
  */
 
-export { MigrationTool, LintTool, RunChangesTool, ValidateTool, WatsonxLLMTool };
+export {
+  MigrationTool,
+  CodeAnalyzerTool,
+  CodeRecommendationTool,
+  CodeMigratorTool,
+  LintTool,
+  RunChangesTool,
+  ValidateTool,
+  WatsonxLLMTool
+};
 
 /**
  * Tool registry for easy access
  */
 export const tools = {
-  migration: MigrationTool,
+  "code-analyzer": CodeAnalyzerTool,
+  "code-recommendation": CodeRecommendationTool,
+  "code-migrator": CodeMigratorTool,
+  migration: MigrationTool, // Legacy tool - kept for backward compatibility
   lint: LintTool,
   "run-changes": RunChangesTool,
   validate: ValidateTool,

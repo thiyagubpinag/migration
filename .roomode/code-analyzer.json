@@ -1,0 +1,39 @@
+{
+  "name": "code-analyzer",
+  "description": "Scans repository and identifies legacy code, outdated patterns, and areas requiring modernization",
+  "version": "1.0.0",
+  "type": "mcp-tool",
+  "toolPath": "tools/code-analyzer-tool/index.js",
+  "capabilities": [
+    "Scan legacy code against IBM modernization rules",
+    "Identify security vulnerabilities and outdated patterns",
+    "Compare with IBM-approved modern code",
+    "Generate priority scores and urgency levels",
+    "Provide detailed issue reports with line numbers",
+    "Estimate migration effort"
+  ],
+  "parameters": {
+    "legacyFile": {
+      "type": "string",
+      "required": true,
+      "description": "Path to the legacy file to analyze"
+    },
+    "modernFile": {
+      "type": "string",
+      "required": false,
+      "description": "Path to IBM-approved modern reference file"
+    },
+    "detailed": {
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Include detailed analysis in report"
+    }
+  },
+  "outputs": {
+    "analysis": "Complete code analysis with issues and recommendations",
+    "summary": "Summary report with priority scores and effort estimates",
+    "report": "Formatted analysis report"
+  },
+  "nextStep": "code-recommendation"
+}

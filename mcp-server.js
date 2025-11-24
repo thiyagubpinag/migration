@@ -38,8 +38,102 @@ class MigrationToolsServer {
       return {
         tools: [
           {
+            name: "code-analyzer",
+            description: "Scans repository and identifies legacy code, outdated patterns, and areas requiring modernization",
+            inputSchema: {
+              type: "object",
+              properties: {
+                legacyFile: {
+                  type: "string",
+                  description: "Path to legacy code file to analyze (relative to workspace)",
+                },
+                modernFile: {
+                  type: "string",
+                  description: "Path to IBM-approved modern reference file (optional)",
+                },
+                detailed: {
+                  type: "boolean",
+                  description: "Include detailed analysis in report",
+                  default: true
+                },
+                modelId: {
+                  type: "string",
+                  description: "IBM Watsonx model ID to use",
+                },
+              },
+              required: ["legacyFile"]
+            },
+          },
+          {
+            name: "code-recommendation",
+            description: "Uses AI prompts, modern codebase, and IBM modernization rules to generate detailed migration recommendations",
+            inputSchema: {
+              type: "object",
+              properties: {
+                legacyFile: {
+                  type: "string",
+                  description: "Path to legacy code file to migrate (relative to workspace)",
+                },
+                modernFile: {
+                  type: "string",
+                  description: "Path to IBM-approved modern reference file (required)",
+                },
+                analysis: {
+                  type: "object",
+                  description: "Pre-computed analysis from code-analyzer tool (optional)",
+                },
+                requireApproval: {
+                  type: "boolean",
+                  description: "Wait for user approval before proceeding to migration",
+                  default: true
+                },
+                modelId: {
+                  type: "string",
+                  description: "IBM Watsonx model ID to use",
+                },
+              },
+              required: ["legacyFile", "modernFile"]
+            },
+          },
+          {
+            name: "code-migrator",
+            description: "Uses AI prompts to apply approved migration changes and migrate legacy code to modern version",
+            inputSchema: {
+              type: "object",
+              properties: {
+                legacyFile: {
+                  type: "string",
+                  description: "Path to legacy code file to migrate (relative to workspace)",
+                },
+                migrationPlan: {
+                  type: "object",
+                  description: "Approved migration plan from code-recommendation tool (required)",
+                },
+                dryRun: {
+                  type: "boolean",
+                  description: "Preview changes without applying them",
+                  default: false
+                },
+                useAI: {
+                  type: "boolean",
+                  description: "Use AI to enhance migration with specific transformations",
+                  default: true
+                },
+                modernFile: {
+                  type: "string",
+                  description: "Path to modern reference file (required if useAI is true)",
+                },
+                modelId: {
+                  type: "string",
+                  description: "IBM Watsonx model ID to use",
+                },
+              },
+              required: ["legacyFile", "migrationPlan"]
+            },
+          },
+          {
             name: "migration",
-            description: "AI-driven code migration tool with IBM standards. Supports actions: scan, recommend, migrate, full",
+            description: "[LEGACY] AI-driven code migration tool with IBM standards. Use code-analyzer, code-recommendation, and code-migrator instead.",
             inputSchema: {
               type: "object",
               properties: {
