@@ -1,0 +1,282 @@
+{
+  "version": "1.0.0",
+  "name": "IBM Code Modernization Rules",
+  "description": "Comprehensive rules for modernizing legacy code to IBM standards",
+  "categories": {
+    "syntax": {
+      "name": "Modern JavaScript Syntax",
+      "rules": [
+        {
+          "id": "use-const-let",
+          "severity": "error",
+          "description": "Replace 'var' with 'const' or 'let'",
+          "pattern": "\\bvar\\s+",
+          "replacement": "const/let based on reassignment",
+          "rationale": "const and let provide block scoping and prevent hoisting issues"
+        },
+        {
+          "id": "use-arrow-functions",
+          "severity": "warning",
+          "description": "Use arrow functions for callbacks and short functions",
+          "pattern": "function\\s*\\([^)]*\\)\\s*{",
+          "replacement": "Arrow function syntax",
+          "rationale": "Arrow functions provide cleaner syntax and lexical this binding"
+        },
+        {
+          "id": "use-template-literals",
+          "severity": "warning",
+          "description": "Use template literals instead of string concatenation",
+          "pattern": "\\+\\s*['\"]|['\"]\\s*\\+",
+          "replacement": "Template literals with ${} syntax",
+          "rationale": "Template literals are more readable and less error-prone"
+        },
+        {
+          "id": "use-destructuring",
+          "severity": "info",
+          "description": "Use destructuring for object and array access",
+          "pattern": "Multiple property access patterns",
+          "replacement": "Destructuring assignment",
+          "rationale": "Destructuring reduces code verbosity and improves readability"
+        }
+      ]
+    },
+    "async": {
+      "name": "Asynchronous Patterns",
+      "rules": [
+        {
+          "id": "callbacks-to-promises",
+          "severity": "error",
+          "description": "Convert callback-based async to Promises",
+          "pattern": "function.*callback\\)",
+          "replacement": "Promise-based async functions",
+          "rationale": "Promises provide better error handling and avoid callback hell"
+        },
+        {
+          "id": "use-async-await",
+          "severity": "error",
+          "description": "Use async/await instead of promise chains",
+          "pattern": "\\.then\\(.*\\.then\\(",
+          "replacement": "async/await syntax",
+          "rationale": "async/await provides cleaner, more readable asynchronous code"
+        },
+        {
+          "id": "proper-error-handling",
+          "severity": "error",
+          "description": "Add try-catch blocks for async operations",
+          "pattern": "async functions without try-catch",
+          "replacement": "try-catch wrapped async operations",
+          "rationale": "Proper error handling prevents unhandled promise rejections"
+        }
+      ]
+    },
+    "modules": {
+      "name": "Module System",
+      "rules": [
+        {
+          "id": "use-es6-imports",
+          "severity": "error",
+          "description": "Replace require() with ES6 import statements",
+          "pattern": "require\\(['\"]",
+          "replacement": "import statements",
+          "rationale": "ES6 modules are the standard and provide better tree-shaking"
+        },
+        {
+          "id": "use-es6-exports",
+          "severity": "error",
+          "description": "Replace module.exports with ES6 export statements",
+          "pattern": "module\\.exports\\s*=",
+          "replacement": "export/export default",
+          "rationale": "ES6 exports are more explicit and support named exports"
+        }
+      ]
+    },
+    "security": {
+      "name": "Security Best Practices",
+      "rules": [
+        {
+          "id": "no-hardcoded-credentials",
+          "severity": "critical",
+          "description": "Remove hardcoded credentials and use environment variables",
+          "pattern": "password\\s*:\\s*['\"]|apiKey\\s*:\\s*['\"]",
+          "replacement": "process.env variables",
+          "rationale": "Hardcoded credentials pose serious security risks"
+        },
+        {
+          "id": "use-prepared-statements",
+          "severity": "critical",
+          "description": "Use prepared statements to prevent SQL injection",
+          "pattern": "query.*\\+.*['\"]",
+          "replacement": "Parameterized queries",
+          "rationale": "Prepared statements prevent SQL injection attacks"
+        },
+        {
+          "id": "input-validation",
+          "severity": "error",
+          "description": "Add input validation for all user inputs",
+          "pattern": "req\\.body without validation",
+          "replacement": "Validation middleware",
+          "rationale": "Input validation prevents injection attacks and data corruption"
+        },
+        {
+          "id": "use-security-headers",
+          "severity": "error",
+          "description": "Add security headers using helmet",
+          "pattern": "express app without helmet",
+          "replacement": "app.use(helmet())",
+          "rationale": "Security headers protect against common web vulnerabilities"
+        }
+      ]
+    },
+    "architecture": {
+      "name": "Architecture Patterns",
+      "rules": [
+        {
+          "id": "use-classes",
+          "severity": "warning",
+          "description": "Use ES6 classes for object-oriented code",
+          "pattern": "function constructors",
+          "replacement": "ES6 class syntax",
+          "rationale": "Classes provide cleaner syntax and better inheritance"
+        },
+        {
+          "id": "dependency-injection",
+          "severity": "info",
+          "description": "Use dependency injection for better testability",
+          "pattern": "Direct instantiation of dependencies",
+          "replacement": "Constructor injection",
+          "rationale": "Dependency injection improves testability and modularity"
+        },
+        {
+          "id": "event-driven",
+          "severity": "info",
+          "description": "Use EventEmitter for decoupled communication",
+          "pattern": "Direct method calls for notifications",
+          "replacement": "Event emission and listeners",
+          "rationale": "Event-driven architecture improves decoupling"
+        }
+      ]
+    },
+    "database": {
+      "name": "Database Best Practices",
+      "rules": [
+        {
+          "id": "use-connection-pooling",
+          "severity": "error",
+          "description": "Use connection pooling for database connections",
+          "pattern": "createConnection without pooling",
+          "replacement": "createPool with configuration",
+          "rationale": "Connection pooling improves performance and resource management"
+        },
+        {
+          "id": "use-transactions",
+          "severity": "error",
+          "description": "Use transactions for multi-step operations",
+          "pattern": "Multiple queries without transaction",
+          "replacement": "Transaction-wrapped operations",
+          "rationale": "Transactions ensure data consistency and integrity"
+        },
+        {
+          "id": "graceful-shutdown",
+          "severity": "warning",
+          "description": "Implement graceful shutdown for database connections",
+          "pattern": "process.exit without cleanup",
+          "replacement": "Proper connection cleanup",
+          "rationale": "Graceful shutdown prevents data corruption and connection leaks"
+        }
+      ]
+    },
+    "api": {
+      "name": "API Design",
+      "rules": [
+        {
+          "id": "use-rate-limiting",
+          "severity": "error",
+          "description": "Add rate limiting to API endpoints",
+          "pattern": "Routes without rate limiting",
+          "replacement": "express-rate-limit middleware",
+          "rationale": "Rate limiting prevents abuse and DoS attacks"
+        },
+        {
+          "id": "use-authentication",
+          "severity": "critical",
+          "description": "Add authentication to protected endpoints",
+          "pattern": "Routes without auth middleware",
+          "replacement": "Authentication middleware",
+          "rationale": "Authentication protects sensitive operations"
+        },
+        {
+          "id": "structured-responses",
+          "severity": "warning",
+          "description": "Use consistent response structure",
+          "pattern": "Inconsistent response formats",
+          "replacement": "Standardized response wrapper",
+          "rationale": "Consistent responses improve API usability"
+        },
+        {
+          "id": "error-handling-middleware",
+          "severity": "error",
+          "description": "Add centralized error handling middleware",
+          "pattern": "Inline error handling",
+          "replacement": "Error handling middleware",
+          "rationale": "Centralized error handling ensures consistent error responses"
+        }
+      ]
+    },
+    "logging": {
+      "name": "Logging and Monitoring",
+      "rules": [
+        {
+          "id": "structured-logging",
+          "severity": "warning",
+          "description": "Use structured logging with proper log levels",
+          "pattern": "console.log statements",
+          "replacement": "Logger with levels (debug, info, warn, error)",
+          "rationale": "Structured logging improves debugging and monitoring"
+        },
+        {
+          "id": "log-context",
+          "severity": "info",
+          "description": "Include context in log messages",
+          "pattern": "Logs without context",
+          "replacement": "Logs with request ID, user ID, etc.",
+          "rationale": "Context helps trace issues across distributed systems"
+        }
+      ]
+    },
+    "testing": {
+      "name": "Testing Requirements",
+      "rules": [
+        {
+          "id": "unit-tests",
+          "severity": "warning",
+          "description": "Add unit tests for business logic",
+          "pattern": "Code without tests",
+          "replacement": "Jest/Mocha test suites",
+          "rationale": "Unit tests ensure code correctness and prevent regressions"
+        },
+        {
+          "id": "integration-tests",
+          "severity": "info",
+          "description": "Add integration tests for API endpoints",
+          "pattern": "APIs without integration tests",
+          "replacement": "Supertest integration tests",
+          "rationale": "Integration tests verify end-to-end functionality"
+        }
+      ]
+    }
+  },
+  "migration_priorities": [
+    "critical",
+    "error",
+    "warning",
+    "info"
+  ],
+  "ibm_standards": {
+    "code_style": "airbnb-base with IBM modifications",
+    "documentation": "JSDoc for all public APIs",
+    "error_handling": "Centralized error handling with custom error classes",
+    "logging": "Winston or Bunyan with structured logging",
+    "testing": "Jest with minimum 80% coverage",
+    "security": "OWASP Top 10 compliance"
+  }
+}

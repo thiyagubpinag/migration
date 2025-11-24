@@ -39,19 +39,40 @@ class MigrationToolsServer {
         tools: [
           {
             name: "migration",
-            description: "Tool for handling migration operations",
+            description: "AI-driven code migration tool with IBM standards. Supports actions: scan, recommend, migrate, full",
             inputSchema: {
               type: "object",
               properties: {
-                params: {
-                  type: "object",
-                  description: "Migration-specific parameters",
+                action: {
+                  type: "string",
+                  enum: ["scan", "recommend", "migrate", "full"],
+                  description: "Action to perform: scan (analyze code), recommend (get AI suggestions), migrate (apply changes), full (complete workflow)",
+                  default: "scan"
+                },
+                legacyFile: {
+                  type: "string",
+                  description: "Path to legacy code file to migrate (relative to workspace)",
+                },
+                modernFile: {
+                  type: "string",
+                  description: "Path to IBM-approved modern reference file (optional)",
+                },
+                dryRun: {
+                  type: "boolean",
+                  description: "Preview changes without applying them",
+                  default: true
+                },
+                autoApply: {
+                  type: "boolean",
+                  description: "Automatically apply changes without approval",
+                  default: false
                 },
                 modelId: {
                   type: "string",
                   description: "IBM Watsonx model ID to use",
                 },
               },
+              required: ["legacyFile"]
             },
           },
           {

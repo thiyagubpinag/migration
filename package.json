@@ -8,7 +8,10 @@
     "test": "node tests/run-tests.js",
     "start": "node index.js",
     "mcp": "node mcp-server.js",
-    "mcp:dev": "node --watch mcp-server.js"
+    "mcp:dev": "node --watch mcp-server.js",
+    "example:migration": "node examples/migration-example.js",
+    "migrate:scan": "node -e \"import('./tools/migration/index.js').then(m => new m.MigrationTool().execute({action:'scan',legacyFile:'legacy-code/user-service.js',modernFile:'ibm-modern-code/user-service.js'}).then(console.log))\"",
+    "migrate:recommend": "node -e \"import('./tools/migration/index.js').then(m => new m.MigrationTool().execute({action:'recommend',legacyFile:'legacy-code/user-service.js',modernFile:'ibm-modern-code/user-service.js'}).then(console.log))\""
   },
   "keywords": [
     "mcp",
