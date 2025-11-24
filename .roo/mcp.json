@@ -3,12 +3,14 @@
     "migration-tools": {
       "command": "node",
       "args": [
-        "mcp-server.js"
+        "/Users/thiyaguseran/Desktop/migration/mcp-server.js"
       ],
-      "timeout": 300000,
       "env": {
         "WATSONX_URL": "https://us-south.ml.cloud.ibm.com",
         "WATSONX_VERSION": "2024-05-31",
+        "WATSONX_PROJECT_ID": "e683e658-a9f6-4d20-96c4-709da7f2def7",
+        "WATSONX_API_KEY": "2HBVpn8nZiv7j7DRZOAo5VYshTIdj57N8seG5R8WAxG5",
+        "WATSONX_MODEL_ID": "mistralai/mistral-medium-2505",
         "MCP_TIMEOUT": "300000"
       }
     }
