@@ -1,6 +1,6 @@
 {
   "mcpServers": {
-    "migration-tools": {
+    "watsonx-llm": {
       "command": "node",
       "args": [
         "/Users/thiyaguseran/Desktop/migration/mcp-server.js"

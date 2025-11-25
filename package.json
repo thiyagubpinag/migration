@@ -1,24 +1,20 @@
 {
-  "name": "mcp-migration-tools",
+  "name": "mcp-watsonx-llm",
   "version": "1.0.0",
-  "description": "MCP tool modules for migration, linting, running changes, and validation with IBM Watsonx integration",
+  "description": "MCP tool for IBM Watsonx LLM integration",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "node tests/run-tests.js",
     "start": "node index.js",
     "mcp": "node mcp-server.js",
-    "mcp:dev": "node --watch mcp-server.js",
-    "example:migration": "node examples/migration-example.js",
-    "migrate:scan": "node -e \"import('./tools/migration/index.js').then(m => new m.MigrationTool().execute({action:'scan',legacyFile:'legacy-code/user-service.js',modernFile:'ibm-modern-code/user-service.js'}).then(console.log))\"",
-    "migrate:recommend": "node -e \"import('./tools/migration/index.js').then(m => new m.MigrationTool().execute({action:'recommend',legacyFile:'legacy-code/user-service.js',modernFile:'ibm-modern-code/user-service.js'}).then(console.log))\""
+    "mcp:dev": "node --watch mcp-server.js"
   },
   "keywords": [
     "mcp",
-    "migration",
     "watsonx",
     "langchain",
-    "boomerang"
+    "llm",
+    "ai"
   ],
   "author": "",
   "license": "ISC",

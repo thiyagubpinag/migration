@@ -1,11 +1,4 @@
 import dotenv from "dotenv";
-import MigrationTool from "./tools/migration/index.js";
-import CodeAnalyzerTool from "./tools/code-analyzer-tool/index.js";
-import CodeRecommendationTool from "./tools/code-recommendation-tool/index.js";
-import CodeMigratorTool from "./tools/code-migrator-tool/index.js";
-import LintTool from "./tools/lint/index.js";
-import RunChangesTool from "./tools/run-changes/index.js";
-import ValidateTool from "./tools/validate/index.js";
 import WatsonxLLMTool from "./tools/watsonx_llm/index.js";
 import { createWatsonxModel } from "./config/model-config.js";
 
@@ -14,18 +7,11 @@ dotenv.config();
 
 
 /**
- * Main entry point for MCP Migration Tools
- * Exports all tool modules for use in Boomerang tasks
+ * Main entry point for Watsonx LLM Tool
+ * Exports the Watsonx LLM tool for MCP integration
  */
 
 export {
-  MigrationTool,
-  CodeAnalyzerTool,
-  CodeRecommendationTool,
-  CodeMigratorTool,
-  LintTool,
-  RunChangesTool,
-  ValidateTool,
   WatsonxLLMTool
 };
 
@@ -33,13 +19,6 @@ export {
  * Tool registry for easy access
  */
 export const tools = {
-  "code-analyzer": CodeAnalyzerTool,
-  "code-recommendation": CodeRecommendationTool,
-  "code-migrator": CodeMigratorTool,
-  migration: MigrationTool, // Legacy tool - kept for backward compatibility
-  lint: LintTool,
-  "run-changes": RunChangesTool,
-  validate: ValidateTool,
   watsonx_llm: WatsonxLLMTool,
 };
 
@@ -59,12 +38,10 @@ export function createTool(toolName, config = {}) {
   const toolInstance = new ToolClass(config);
 
   // Ensure environment variables are loaded for the tool
-  if (toolName === 'watsonx_llm') {
-    try {
-      createWatsonxModel();
-    } catch (err) {
-      throw new Error(`Environment configuration error: ${err.message}`);
-    }
+  try {
+    createWatsonxModel();
+  } catch (err) {
+    throw new Error(`Environment configuration error: ${err.message}`);
   }
 
   return toolInstance;

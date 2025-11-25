@@ -1,9 +1,9 @@
 {
-  "name": "mcp-migration-tools",
+  "name": "mcp-watsonx-llm",
   "version": "1.0.0",
-  "description": "MCP tool modules for migration tasks with IBM Watsonx integration",
+  "description": "MCP tool for IBM Watsonx LLM integration",
   "type": "task",
-  "category": "migration",
+  "category": "ai",
   "runtime": "node",
   "entrypoint": "index.js",
   "parameters": [
@@ -11,8 +11,8 @@
       "name": "tool",
       "type": "string",
       "required": true,
-      "description": "Tool to execute (migration, lint, run-changes, validate)",
-      "enum": ["migration", "lint", "run-changes", "validate", "watsonx_llm"]
+      "description": "Tool to execute",
+      "enum": ["watsonx_llm"]
     },
     {
       "name": "modelId",
@@ -64,7 +64,7 @@
       "description": "Tool execution result"
     }
   ],
-  "tags": ["mcp", "migration", "watsonx", "langchain", "ai"],
+  "tags": ["mcp", "watsonx", "langchain", "ai", "llm"],
   "author": "ROO Team",
   "license": "ISC"
 }

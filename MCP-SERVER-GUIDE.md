@@ -2,87 +2,36 @@
 
 ## Overview
 
-This project now includes a fully functional MCP (Model Context Protocol) server that exposes all migration tools through a standardized interface. The server can be used with any MCP-compatible client.
+This project includes a fully functional MCP (Model Context Protocol) server that exposes the Watsonx LLM tool through a standardized interface. The server can be used with any MCP-compatible client.
 
 ## What's Been Set Up
 
 ### 1. **Roomode Configuration** (`roomode.config.json`)
 - Defines the MCP server configuration
-- Lists all 5 tools with their schemas
+- Watsonx LLM tool with input schema
 - Specifies environment variables needed
 
 ### 2. **Boomerang Task Configuration** (`boomerang.config.json`)
-- Updated to include all 5 tools (migration, lint, run-changes, validate, watsonx_llm)
 - Configured for Boomerang task execution
+- Watsonx LLM tool parameters
 
 ### 3. **MCP Server** (`mcp-server.js`)
 - Implements the Model Context Protocol
-- Exposes all tools via stdio transport
+- Exposes Watsonx LLM tool via stdio transport
 - Handles tool listing and execution
 
 ### 4. **Tool Registry** (`index.js`)
-- All 5 tools registered:
-  - `migration` - Migration operations
-  - `lint` - Code linting and quality checks
-  - `run-changes` - Apply changes and transformations
-  - `validate` - Validation operations
-  - `watsonx_llm` - Direct LLM interaction
+- Watsonx LLM tool registered and exported
+- Factory function for creating tool instances
+- Easy tool discovery
 
-## Available Tools
+## Available Tool
 
-### 1. Migration Tool
+### Watsonx LLM Call
 ```json
 {
-  "name": "migration",
-  "description": "Tool for handling migration operations",
-  "params": {
-    "params": "object - Migration-specific parameters",
-    "modelId": "string - IBM Watsonx model ID"
-  }
-}
-```
-
-### 2. Lint Tool
-```json
-{
-  "name": "lint",
-  "description": "Tool for linting and code quality checks",
-  "params": {
-    "params": "object - Lint-specific parameters",
-    "modelId": "string - IBM Watsonx model ID"
-  }
-}
-```
-
-### 3. Run Changes Tool
-```json
-{
-  "name": "run-changes",
-  "description": "Tool for running and applying changes",
-  "params": {
-    "params": "object - Run-changes specific parameters",
-    "modelId": "string - IBM Watsonx model ID"
-  }
-}
-```
-
-### 4. Validate Tool
-```json
-{
-  "name": "validate",
-  "description": "Tool for validation operations",
-  "params": {
-    "params": "object - Validation-specific parameters",
-    "modelId": "string - IBM Watsonx model ID"
-  }
-}
-```
-
-### 5. Watsonx LLM Tool
-```json
-{
-  "name": "watsonx_llm",
-  "description": "Tool for direct interaction with Watsonx LLM",
+  "name": "watsonx_llm_call",
+  "description": "Direct interaction with IBM Watsonx LLM for AI-powered text generation and analysis",
   "params": {
     "prompt": "string - The prompt to send to the model",
     "useSample": "boolean - Use the sample prompt from file",
@@ -139,7 +88,7 @@ npx @modelcontextprotocol/inspector node mcp-server.js
 ```
 
 2. This will open a web interface where you can:
-   - List all available tools
+   - List available tools
    - Test tool calls with different parameters
    - See responses in real-time
 
@@ -150,7 +99,7 @@ Add to your MCP client configuration (e.g., Claude Desktop's config):
 ```json
 {
   "mcpServers": {
-    "migration-tools": {
+    "watsonx-llm": {
       "command": "node",
       "args": ["/path/to/migration/mcp-server.js"],
       "env": {
@@ -184,7 +133,7 @@ console.log(result);
 
 ```bash
 # Using the sample prompt
-echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"watsonx_llm","arguments":{"useSample":true}}}' | npm run mcp
+echo '{"jsonrpc":"2.0","id":1,"method":"tools/call","params":{"name":"watsonx_llm_call","arguments":{"useSample":true}}}' | npm run mcp
 ```
 
 ### Test listing tools:
@@ -205,11 +154,10 @@ migration/
 ├── config/
 │   └── model-config.js        # Watsonx model configuration
 └── tools/
-    ├── migration/             # Migration tool
-    ├── lint/                  # Lint tool
-    ├── run-changes/           # Run changes tool
-    ├── validate/              # Validate tool
     └── watsonx_llm/           # Watsonx LLM tool
+        ├── index.js           # Tool implementation
+        ├── run-sample.js      # Sample usage
+        └── sample-prompt.md   # Example prompts
 ```
 
 ## Available NPM Scripts
@@ -217,15 +165,13 @@ migration/
 - `npm start` - Run the basic tool registry
 - `npm run mcp` - Start the MCP server
 - `npm run mcp:dev` - Start MCP server with auto-reload
-- `npm test` - Run tests
 
 ## Next Steps
 
 1. **Configure your environment** - Add your Watsonx credentials to `.env`
-2. **Test the server** - Use MCP Inspector to verify all tools work
+2. **Test the server** - Use MCP Inspector to verify the tool works
 3. **Integrate with clients** - Add to Claude Desktop or other MCP clients
-4. **Implement tool logic** - Each tool currently has placeholder implementations
-5. **Add more tools** - Extend the registry with additional tools as needed
+4. **Start using** - Send prompts to the Watsonx LLM through MCP
 
 ## Troubleshooting
 
@@ -234,10 +180,10 @@ migration/
 - Verify your `.env` file has all required variables
 - Check Node.js version (requires Node 18+)
 
-### Tools not appearing
+### Tool not appearing
 - Verify the server is running: `npm run mcp`
 - Check the tool registry in `index.js`
-- Ensure tool classes are properly exported
+- Ensure tool class is properly exported
 
 ### Watsonx errors
 - Verify your API key and project ID are correct

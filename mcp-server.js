@@ -12,14 +12,14 @@ import dotenv from "dotenv";
 dotenv.config();
 
 /**
- * MCP Server for Migration Tools
- * Implements the Model Context Protocol to expose migration tools
+ * MCP Server for Watsonx LLM
+ * Implements the Model Context Protocol to expose Watsonx LLM tool
  */
-class MigrationToolsServer {
+class WatsonxLLMServer {
   constructor() {
     this.server = new Server(
       {
-        name: "migration-tools",
+        name: "watsonx-llm",
         version: "1.0.0",
       },
       {
@@ -38,191 +38,8 @@ class MigrationToolsServer {
       return {
         tools: [
           {
-            name: "code-analyzer",
-            description: "Scans repository and identifies legacy code, outdated patterns, and areas requiring modernization",
-            inputSchema: {
-              type: "object",
-              properties: {
-                legacyFile: {
-                  type: "string",
-                  description: "Path to legacy code file to analyze (relative to workspace)",
-                },
-                modernFile: {
-                  type: "string",
-                  description: "Path to IBM-approved modern reference file (optional)",
-                },
-                detailed: {
-                  type: "boolean",
-                  description: "Include detailed analysis in report",
-                  default: true
-                },
-                modelId: {
-                  type: "string",
-                  description: "IBM Watsonx model ID to use",
-                },
-              },
-              required: ["legacyFile"]
-            },
-          },
-          {
-            name: "code-recommendation",
-            description: "Uses AI prompts, modern codebase, and IBM modernization rules to generate detailed migration recommendations",
-            inputSchema: {
-              type: "object",
-              properties: {
-                legacyFile: {
-                  type: "string",
-                  description: "Path to legacy code file to migrate (relative to workspace)",
-                },
-                modernFile: {
-                  type: "string",
-                  description: "Path to IBM-approved modern reference file (required)",
-                },
-                analysis: {
-                  type: "object",
-                  description: "Pre-computed analysis from code-analyzer tool (optional)",
-                },
-                requireApproval: {
-                  type: "boolean",
-                  description: "Wait for user approval before proceeding to migration",
-                  default: true
-                },
-                modelId: {
-                  type: "string",
-                  description: "IBM Watsonx model ID to use",
-                },
-              },
-              required: ["legacyFile", "modernFile"]
-            },
-          },
-          {
-            name: "code-migrator",
-            description: "Uses AI prompts to apply approved migration changes and migrate legacy code to modern version",
-            inputSchema: {
-              type: "object",
-              properties: {
-                legacyFile: {
-                  type: "string",
-                  description: "Path to legacy code file to migrate (relative to workspace)",
-                },
-                migrationPlan: {
-                  type: "object",
-                  description: "Approved migration plan from code-recommendation tool (required)",
-                },
-                dryRun: {
-                  type: "boolean",
-                  description: "Preview changes without applying them",
-                  default: false
-                },
-                useAI: {
-                  type: "boolean",
-                  description: "Use AI to enhance migration with specific transformations",
-                  default: true
-                },
-                modernFile: {
-                  type: "string",
-                  description: "Path to modern reference file (required if useAI is true)",
-                },
-                modelId: {
-                  type: "string",
-                  description: "IBM Watsonx model ID to use",
-                },
-              },
-              required: ["legacyFile", "migrationPlan"]
-            },
-          },
-          {
-            name: "migration",
-            description: "[LEGACY] AI-driven code migration tool with IBM standards. Use code-analyzer, code-recommendation, and code-migrator instead.",
-            inputSchema: {
-              type: "object",
-              properties: {
-                action: {
-                  type: "string",
-                  enum: ["scan", "recommend", "migrate", "full"],
-                  description: "Action to perform: scan (analyze code), recommend (get AI suggestions), migrate (apply changes), full (complete workflow)",
-                  default: "scan"
-                },
-                legacyFile: {
-                  type: "string",
-                  description: "Path to legacy code file to migrate (relative to workspace)",
-                },
-                modernFile: {
-                  type: "string",
-                  description: "Path to IBM-approved modern reference file (optional)",
-                },
-                dryRun: {
-                  type: "boolean",
-                  description: "Preview changes without applying them",
-                  default: true
-                },
-                autoApply: {
-                  type: "boolean",
-                  description: "Automatically apply changes without approval",
-                  default: false
-                },
-                modelId: {
-                  type: "string",
-                  description: "IBM Watsonx model ID to use",
-                },
-              },
-              required: ["legacyFile"]
-            },
-          },
-          {
-            name: "lint",
-            description: "Tool for linting and code quality checks",
-            inputSchema: {
-              type: "object",
-              properties: {
-                params: {
-                  type: "object",
-                  description: "Lint-specific parameters",
-                },
-                modelId: {
-                  type: "string",
-                  description: "IBM Watsonx model ID to use",
-                },
-              },
-            },
-          },
-          {
-            name: "run-changes",
-            description: "Tool for running and applying changes",
-            inputSchema: {
-              type: "object",
-              properties: {
-                params: {
-                  type: "object",
-                  description: "Run-changes specific parameters",
-                },
-                modelId: {
-                  type: "string",
-                  description: "IBM Watsonx model ID to use",
-                },
-              },
-            },
-          },
-          {
-            name: "validate",
-            description: "Tool for validation operations",
-            inputSchema: {
-              type: "object",
-              properties: {
-                params: {
-                  type: "object",
-                  description: "Validation-specific parameters",
-                },
-                modelId: {
-                  type: "string",
-                  description: "IBM Watsonx model ID to use",
-                },
-              },
-            },
-          },
-          {
-            name: "watsonx_llm",
-            description: "Tool for direct interaction with Watsonx LLM",
+            name: "watsonx_llm_call",
+            description: "Direct interaction with IBM Watsonx LLM for AI-powered text generation and analysis",
             inputSchema: {
               type: "object",
               properties: {
@@ -258,13 +75,13 @@ class MigrationToolsServer {
         // Create timeout promise
         const timeoutPromise = new Promise((_, reject) => {
           setTimeout(() => {
-            reject(new Error(`Operation timed out after ${timeoutMs}ms. For long-running migrations, consider using direct Node.js execution.`));
+            reject(new Error(`Operation timed out after ${timeoutMs}ms.`));
           }, timeoutMs);
         });
 
         // Create tool instance with custom config if modelId provided
         const config = args?.modelId ? { modelId: args.modelId } : {};
-        const tool = createTool(name, config);
+        const tool = createTool('watsonx_llm', config);
 
         // Execute the tool with timeout
         const executionPromise = tool.execute(args?.params || args || {});
@@ -299,7 +116,7 @@ class MigrationToolsServer {
                   tool: name,
                   isTimeout,
                   suggestion: isTimeout
-                    ? 'Try using direct Node.js execution: node -e "import(\'./tools/migration/index.js\').then(async ({ MigrationTool }) => { ... })"'
+                    ? 'Try increasing the MCP_TIMEOUT environment variable'
                     : 'Check the error message for details',
                 },
                 null,
@@ -316,12 +133,12 @@ class MigrationToolsServer {
   async run() {
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
-    console.error("Migration Tools MCP Server running on stdio");
+    console.error("Watsonx LLM MCP Server running on stdio");
   }
 }
 
 // Start the server
-const server = new MigrationToolsServer();
+const server = new WatsonxLLMServer();
 server.run().catch((error) => {
   console.error("Server error:", error);
   process.exit(1);

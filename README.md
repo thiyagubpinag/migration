@@ -1,30 +1,18 @@
-# IBM-Aligned Code Migration System
+# IBM Watsonx LLM MCP Tool
 
-An AI-driven code migration tool that modernizes legacy codebases to IBM-approved standards using IBM Watsonx AI and MCP (Model Context Protocol) integration.
+A Model Context Protocol (MCP) tool for direct interaction with IBM Watsonx AI models through a standardized interface.
 
 ## 🌟 Highlights
 
-- **🤖 AI-Powered Migration** - Uses IBM Watsonx for intelligent recommendations
-- **📊 IBM Standards Compliance** - Compares against IBM-approved modern code
-- **💬 Roo Chat Integration** - Use naturally through chat interface
-- **🔒 Production-Ready** - Automatic backups, dry-run mode, approval workflow
-- **📝 Comprehensive** - Covers syntax, security, architecture, and more
-- **✅ Complete Examples** - Working legacy and modern code samples
+- **🤖 Direct LLM Access** - Interact with IBM Watsonx AI models
+- **🔌 MCP Integration** - Standard Model Context Protocol interface
+- **💬 Easy to Use** - Simple API for AI-powered text generation
+- **🔒 Secure** - Environment-based credential management
+- **⚡ Fast** - Optimized for performance with LangChain
 
 ## 🚀 Quick Start
 
-### For Roo Chat Users (Recommended)
-
-1. **Open Roo Chat** in your IDE
-2. **Switch to Migration Mode**: `/mode migration`
-3. **Start chatting**:
-   ```
-   "Scan my legacy user service and show me what needs to be fixed"
-   ```
-
-That's it! See **[ROO_CHAT_QUICKSTART.md](ROO_CHAT_QUICKSTART.md)** for details.
-
-### For Command Line Users
+### Installation
 
 ```bash
 # Install dependencies
@@ -32,66 +20,43 @@ npm install
 
 # Configure .env with IBM Watsonx credentials
 cp .env.example .env
-
-# Run example migration
-npm run example:migration
+# Edit .env with your credentials
 ```
 
-## 🎯 What It Does
+### Basic Usage
 
-1. **Scans** legacy code against IBM modernization rules
-2. **Compares** with IBM-approved modern implementations
-3. **Generates** AI-powered recommendations using Watsonx
-4. **Previews** changes in dry-run mode
-5. **Requests** approval before applying
-6. **Applies** transformations automatically
-7. **Creates** backups and detailed reports
+```javascript
+import { WatsonxLLMTool } from './index.js';
+
+const llmTool = new WatsonxLLMTool();
+const result = await llmTool.execute({
+  prompt: "Explain quantum computing in simple terms"
+});
+
+console.log(result);
+```
 
 ## 📦 What's Included
 
-- **Legacy Code Examples** - 3 files with common anti-patterns
-- **IBM Modern Code** - 3 IBM-approved reference implementations
-- **Migration Tool** - AI-driven migration engine (1,300+ lines)
-- **IBM Rules** - 30+ modernization rules across 9 categories
-- **Documentation** - 3,600+ lines of guides and examples
-- **Working Example** - Complete end-to-end demonstration
+- **Watsonx LLM Tool** - Direct interaction with IBM Watsonx models
+- **MCP Server** - Model Context Protocol server implementation
+- **Configuration** - Easy setup with environment variables
+- **Examples** - Sample prompts and usage patterns
 
 ## 📁 Repository Structure
 
 ```
 migration/
-├── legacy-code/                 # Legacy code examples
-│   ├── user-service.js         # Callback-based service
-│   ├── database-connector.js   # Hardcoded credentials
-│   └── api-routes.js           # No security/validation
-│
-├── ibm-modern-code/            # IBM-approved modern code
-│   ├── user-service.js         # ES6 classes, async/await
-│   ├── database-connector.js   # Connection pooling, security
-│   └── api-routes.js           # Rate limiting, auth, validation
+├── tools/watsonx_llm/          # Watsonx LLM tool
+│   ├── index.js                # Main tool implementation
+│   ├── run-sample.js           # Sample usage script
+│   └── sample-prompt.md        # Example prompts
 │
 ├── config/
-│   ├── ibm-modernization-rules.json  # IBM modernization rules
-│   └── model-config.js               # Watsonx configuration
+│   └── model-config.js         # Watsonx configuration
 │
-├── tools/migration/
-│   ├── index.js                # Main migration orchestrator
-│   ├── code-analyzer.js        # Code analysis engine
-│   ├── ai-recommender.js       # AI recommendation generator
-│   └── code-migrator.js        # Code transformation engine
-│
-├── examples/
-│   └── migration-example.js    # End-to-end example
-│
-├── Documentation/
-│   ├── ROO_CHAT_QUICKSTART.md  # Quick start for Roo Chat
-│   ├── ROO_CHAT_INTEGRATION.md # Detailed Roo integration
-│   ├── MIGRATION_GUIDE.md      # Complete migration guide
-│   ├── PROJECT_OVERVIEW.md     # Architecture overview
-│   ├── QUICK_REFERENCE.md      # Command reference
-│   └── ARCHITECTURE.md         # System architecture
-│
-├── mcp-server.js               # MCP server for Roo Chat
+├── mcp-server.js               # MCP server
+├── index.js                    # Tool registry
 ├── package.json                # Dependencies
 └── README.md                   # This file
 ```
@@ -147,184 +112,99 @@ return new ChatWatsonx({
   temperature: 0,
 });
 ```
-## 💬 Using with Roo Chat
-
-### Interactive Migration via Chat
-
-The easiest way to use this tool is through Roo Chat:
-
-1. **Open Roo Chat** in your IDE (VSCode/Cursor)
-2. **Switch to Migration Mode**: Type `/mode migration`
-3. **Start chatting naturally**:
-
-```
-You: "Scan my legacy user service and show me what needs to be fixed"
-
-Roo: [Analyzes code using migration tool]
-✅ Scan completed successfully
-
-Summary:
-  - File: legacy-code/user-service.js
-  - Total Issues: 15
-  - Critical Issues: 2 (security)
-  - Error Issues: 8 (functionality)
-  - Priority Score: 75/100 (high urgency)
-
-Would you like AI-powered recommendations?
-
-You: "Yes, show me the recommendations"
-
-Roo: [Generates AI recommendations using Watsonx]
-🤖 Migration Plan Generated
-
-Priority Steps:
-  1. Remove hardcoded credentials (30 min)
-  2. Convert to ES6 modules (1 hour)
-  3. Modernize async patterns (2-3 hours)
-  ...
-
-Total effort: 1-2 days
-Breaking changes: 3
-
-Would you like to preview the changes?
-
-You: "Yes, show me the preview"
-
-Roo: [Runs dry-run migration]
-🔍 Preview of Changes:
-  - 8 transformations
-  - 45 lines to change
-  
-Key changes:
-  var → const
-  callbacks → async/await
-  hardcoded passwords → env vars
-
-Ready to apply?
-
-You: "Yes, apply the migration"
-
-Roo: ✅ Migration complete!
-  - Backup created
-  - 8 changes applied
-  - 45 lines modified
-
-Next: Run tests?
-```
-
-### Natural Language Commands
-
-Just talk naturally - Roo understands:
-- "Scan the legacy code"
-- "Show me AI recommendations"
-- "What will change?"
-- "Apply the migration"
-- "Run the tests"
-
-See **[ROO_CHAT_QUICKSTART.md](ROO_CHAT_QUICKSTART.md)** for more examples and **[ROO_CHAT_INTEGRATION.md](ROO_CHAT_INTEGRATION.md)** for detailed integration guide.
-
 
 ## 🎯 Usage
 
 ### As a Node.js Module
 
 ```javascript
-import { createTool, getAvailableTools } from './index.js';
-
-// List available tools
-const tools = getAvailableTools();
-console.log(tools); // ['migration', 'lint', 'run-changes', 'validate']
+import { createTool } from './index.js';
 
 // Create a tool instance
-const migrationTool = createTool('migration');
+const llmTool = createTool('watsonx_llm');
 
-// Execute the tool
-const result = await migrationTool.execute({
-  // your parameters here
+// Execute with a prompt
+const result = await llmTool.execute({
+  prompt: "What is the meaning of life?"
 });
+
+console.log(result);
 ```
 
-### As a Boomerang Task
+### Using the MCP Server
 
-The repository is configured to run as a Boomerang task in the ROO environment. Use the `boomerang.config.json` configuration:
+Start the MCP server:
 
-**Parameters:**
-- `tool` (required): Tool to execute (migration, lint, run-changes, validate)
-- `modelId` (optional): IBM Watsonx model ID to use
-- `projectId` (optional): IBM Watsonx project ID (overrides env var)
-- `params` (optional): Tool-specific parameters
+```bash
+npm run mcp
+```
 
-**Example Boomerang execution:**
+Or for development with auto-reload:
+
+```bash
+npm run mcp:dev
+```
+
+### With MCP Clients (Roo/Claude Desktop)
+
+Add to your MCP client configuration:
+
 ```json
 {
-  "tool": "migration",
-  "modelId": "mistralai/mistral-medium-2505",
-  "params": {
-    "source": "legacy-code.js",
-    "target": "modern-code.js"
+  "mcpServers": {
+    "watsonx-llm": {
+      "command": "node",
+      "args": ["/path/to/migration/mcp-server.js"],
+      "env": {
+        "WATSONX_PROJECT_ID": "your-project-id",
+        "WATSONX_API_KEY": "your-api-key"
+      }
+    }
   }
 }
 ```
 
 ## 🧪 Testing
 
-Run the test suite:
+Run the sample script:
 
 ```bash
-npm test
+node tools/watsonx_llm/run-sample.js
 ```
 
-The test suite will:
-1. List all available tools
-2. Create instances of each tool
-3. Execute dry-run tests for each tool
+Test the MCP server:
 
-### Sample Prompts
+```bash
+node test-mcp-server.js
+```
 
-Test prompts are available in `tests/prompts/`:
-- `migration-prompt.md` - Test migration operations
-- `lint-prompt.md` - Test linting functionality
-- `run-changes-prompt.md` - Test code transformations
-- `validate-prompt.md` - Test validation operations
+## 📝 API Reference
 
-## 🔧 Tool Modules
+### WatsonxLLMTool
 
-### Migration Tool
-Handles migration-related operations for code modernization and transformation.
-
-### Lint Tool
-Performs code quality checks and linting operations.
-
-### Run Changes Tool
-Executes and applies code transformations and changes.
-
-### Validate Tool
-Validates configurations, code structure, and dependencies.
-
-## 📝 Development
-
-Each tool module follows this structure:
-
+#### Constructor
 ```javascript
-export class ToolName {
-  constructor(customConfig = {}) {
-    this.model = createWatsonxModel(customConfig);
-    this.name = "tool-name";
-  }
-
-  async execute(params) {
-    // Implementation here
-  }
-
-  getMetadata() {
-    return {
-      name: this.name,
-      description: "Tool description",
-      version: "1.0.0",
-    };
-  }
-}
+new WatsonxLLMTool(customConfig = {})
 ```
+
+#### Methods
+
+**execute(params)**
+- `params.prompt` (string) - The prompt to send to the model
+- `params.useSample` (boolean) - Use the sample prompt from file
+- `params.modelId` (string, optional) - Override the default model ID
+
+Returns: Promise with the model's response
+
+**getMetadata()**
+
+Returns tool metadata including name, description, and version.
+
+## 🔧 Available NPM Scripts
+
+- `npm start` - Run the tool registry
+- `npm run mcp` - Start the MCP server
+- `npm run mcp:dev` - Start MCP server with auto-reload
 
 ## 🤝 Contributing
 
@@ -342,8 +222,12 @@ ISC
 
 - [IBM Watsonx Documentation](https://www.ibm.com/watsonx)
 - [LangChain Documentation](https://js.langchain.com/)
-- [Boomerang Documentation](https://www.useboomerang.io/)
+- [Model Context Protocol](https://modelcontextprotocol.io)
 
 ## 📧 Support
 
 For issues and questions, please open an issue in the repository.
+
+---
+
+**Made with Bob** 🤖
