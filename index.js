@@ -1,14 +1,15 @@
 import dotenv from "dotenv";
 import WatsonxLLMTool from "./tools/watsonx_llm/index.js";
 import { createWatsonxModel } from "./config/model-config.js";
+import codeAnalyzerTools from "./tools/code-analyzer/index.js";
 
 // Load environment variables from .env file
 dotenv.config();
 
 
 /**
- * Main entry point for Watsonx LLM Tool
- * Exports the Watsonx LLM tool for MCP integration
+ * Main entry point for Tools
+ * Exports all tools for MCP integration
  */
 
 export {
@@ -20,6 +21,8 @@ export {
  */
 export const tools = {
   watsonx_llm: WatsonxLLMTool,
+  analyze_legacy_code: codeAnalyzerTools.tools[0],
+  get_modernization_rule: codeAnalyzerTools.tools[1],
 };
 
 /**

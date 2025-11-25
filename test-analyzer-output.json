@@ -1,0 +1,1522 @@
+{
+  "success": true,
+  "metadata": {
+    "analyzedAt": "2025-11-25T03:20:18.118Z",
+    "project": "legacy-codebase",
+    "projectPath": "/Users/thiyaguseran/Desktop/migration/example-migration-project/legacy-codebase",
+    "analyzer": "IBM Code Analyzer v1.0.0"
+  },
+  "summary": {
+    "totalIssues": 31,
+    "dependencies": {
+      "total": 12,
+      "deprecated": 8,
+      "outdated": 4,
+      "securityVulnerabilities": 3
+    },
+    "patterns": {
+      "filesAnalyzed": 2,
+      "totalPatterns": 16,
+      "byCategory": {
+        "javascript-modernization": 2,
+        "async-modernization": 1,
+        "module-system": 4,
+        "function-syntax": 2,
+        "oop-modernization": 1,
+        "array-operations": 2,
+        "deprecated-api": 4
+      },
+      "bySeverity": {
+        "warning": 7,
+        "info": 8,
+        "error": 1
+      }
+    },
+    "rules": {
+      "totalRules": 31,
+      "dependencyIssues": 15,
+      "patternIssues": 16,
+      "aiPrompts": 9,
+      "bySeverity": {
+        "critical": 0,
+        "error": 12,
+        "warning": 11,
+        "info": 8
+      },
+      "estimatedEffort": "very-high"
+    }
+  },
+  "dependencyIssues": [
+    {
+      "type": "outdated",
+      "package": "express",
+      "currentVersion": "3.21.2",
+      "minVersion": "4.19.0",
+      "recommendedVersion": "4.19.2",
+      "severity": "medium"
+    },
+    {
+      "type": "outdated",
+      "package": "lodash",
+      "currentVersion": "3.10.1",
+      "minVersion": "4.17.21",
+      "recommendedVersion": "4.17.21",
+      "severity": "medium"
+    },
+    {
+      "type": "deprecated",
+      "package": "request",
+      "currentVersion": "2.88.0",
+      "status": "deprecated",
+      "reason": "No longer maintained",
+      "alternative": "axios",
+      "severity": "high"
+    },
+    {
+      "type": "outdated",
+      "package": "moment",
+      "currentVersion": "2.24.0",
+      "minVersion": "2.29.4",
+      "recommendedVersion": "2.29.4",
+      "severity": "medium"
+    },
+    {
+      "type": "deprecated",
+      "package": "async",
+      "currentVersion": "2.6.1",
+      "status": "legacy",
+      "reason": "Native async/await is preferred",
+      "alternative": "native-async-await",
+      "severity": "high"
+    },
+    {
+      "type": "deprecated",
+      "package": "jquery",
+      "currentVersion": "2.2.4",
+      "status": "not-recommended-server",
+      "reason": "Not needed for server-side JavaScript",
+      "alternative": "native-dom-apis",
+      "severity": "high"
+    },
+    {
+      "type": "deprecated",
+      "package": "underscore",
+      "currentVersion": "1.8.3",
+      "status": "legacy",
+      "reason": "Native array methods and lodash are preferred",
+      "alternative": "lodash",
+      "severity": "high"
+    },
+    {
+      "type": "deprecated",
+      "package": "bluebird",
+      "currentVersion": "3.5.0",
+      "status": "legacy",
+      "reason": "Native Promises have caught up in performance",
+      "alternative": "native-promises",
+      "severity": "high"
+    },
+    {
+      "type": "deprecated",
+      "package": "q",
+      "currentVersion": "1.5.1",
+      "status": "deprecated",
+      "reason": "Native Promises are standard",
+      "alternative": "native-promises",
+      "severity": "high"
+    },
+    {
+      "type": "outdated",
+      "package": "body-parser",
+      "currentVersion": "1.18.3",
+      "minVersion": "1.20.2",
+      "recommendedVersion": "1.20.2",
+      "severity": "medium"
+    },
+    {
+      "type": "deprecated",
+      "package": "gulp",
+      "currentVersion": "3.9.1",
+      "status": "legacy",
+      "reason": "Modern build tools are preferred",
+      "alternative": "npm-scripts",
+      "severity": "high"
+    },
+    {
+      "type": "deprecated",
+      "package": "grunt",
+      "currentVersion": "1.0.1",
+      "status": "legacy",
+      "reason": "Modern build tools are preferred",
+      "alternative": "npm-scripts",
+      "severity": "high"
+    },
+    {
+      "type": "security",
+      "package": "express",
+      "currentVersion": "3.21.2",
+      "severity": "high",
+      "cve": "CVE-2022-24999",
+      "description": "Open redirect vulnerability",
+      "affectedVersions": "< 4.17.3"
+    },
+    {
+      "type": "security",
+      "package": "lodash",
+      "currentVersion": "3.10.1",
+      "severity": "high",
+      "cve": "CVE-2021-23337",
+      "description": "Command injection vulnerability",
+      "affectedVersions": "< 4.17.21"
+    },
+    {
+      "type": "security",
+      "package": "moment",
+      "currentVersion": "2.24.0",
+      "severity": "high",
+      "cve": "CVE-2022-24785",
+      "description": "Path traversal vulnerability",
+      "affectedVersions": "< 2.29.2"
+    }
+  ],
+  "patternIssues": [
+    {
+      "id": "no-var",
+      "category": "javascript-modernization",
+      "severity": "warning",
+      "message": "Avoid using var. Use let or const instead.",
+      "file": "src/utils.js",
+      "occurrences": 21,
+      "legacy_pattern": "var",
+      "modern_replacement": "let or const",
+      "examples": {
+        "before": "var x = 1;",
+        "after": "const x = 1; // or let x = 1; if reassignment is needed"
+      }
+    },
+    {
+      "id": "callback-pattern",
+      "category": "async-modernization",
+      "severity": "warning",
+      "message": "Replace callback pattern with async/await for better readability.",
+      "file": "src/utils.js",
+      "occurrences": 1,
+      "legacy_pattern": "callback functions",
+      "modern_replacement": "async/await",
+      "examples": {
+        "before": "function fetchData(id, callback) {\n  request.get(url, callback);\n}",
+        "after": "async function fetchData(id) {\n  const response = await axios.get(url);\n  return response.data;\n}"
+      }
+    },
+    {
+      "id": "require-commonjs",
+      "category": "module-system",
+      "severity": "info",
+      "message": "Consider migrating from CommonJS require() to ES6 import.",
+      "file": "src/utils.js",
+      "occurrences": 3,
+      "legacy_pattern": "require()",
+      "modern_replacement": "import",
+      "examples": {
+        "before": "const express = require('express');",
+        "after": "import express from 'express';"
+      }
+    },
+    {
+      "id": "module-exports",
+      "category": "module-system",
+      "severity": "info",
+      "message": "Consider migrating from CommonJS module.exports to ES6 export.",
+      "file": "src/utils.js",
+      "occurrences": 1,
+      "legacy_pattern": "module.exports",
+      "modern_replacement": "export default or export",
+      "examples": {
+        "before": "module.exports = myFunction;",
+        "after": "export default myFunction;"
+      }
+    },
+    {
+      "id": "function-expression",
+      "category": "function-syntax",
+      "severity": "info",
+      "message": "Use arrow functions with const for better scoping.",
+      "file": "src/utils.js",
+      "occurrences": 1,
+      "legacy_pattern": "function expressions with var",
+      "modern_replacement": "arrow functions with const",
+      "examples": {
+        "before": "var add = function(a, b) { return a + b; };",
+        "after": "const add = (a, b) => a + b;"
+      }
+    },
+    {
+      "id": "prototype-method",
+      "category": "oop-modernization",
+      "severity": "warning",
+      "message": "Use ES6 classes instead of prototype-based inheritance.",
+      "file": "src/utils.js",
+      "occurrences": 7,
+      "legacy_pattern": "prototype-based methods",
+      "modern_replacement": "ES6 class methods",
+      "examples": {
+        "before": "Person.prototype.greet = function() { return \"Hello\"; };",
+        "after": "class Person {\n  greet() { return \"Hello\"; }\n}"
+      }
+    },
+    {
+      "id": "arguments-object",
+      "category": "function-syntax",
+      "severity": "warning",
+      "message": "Use rest parameters instead of the arguments object.",
+      "file": "src/utils.js",
+      "occurrences": 1,
+      "legacy_pattern": "arguments object",
+      "modern_replacement": "rest parameters",
+      "examples": {
+        "before": "function sum() {\n  var total = 0;\n  for (var i = 0; i < arguments.length; i++) {\n    total += arguments[i];\n  }\n  return total;\n}",
+        "after": "function sum(...numbers) {\n  return numbers.reduce((total, num) => total + num, 0);\n}"
+      }
+    },
+    {
+      "id": "for-loop-legacy",
+      "category": "array-operations",
+      "severity": "info",
+      "message": "Use array methods (map, filter, forEach) or for...of loop.",
+      "file": "src/utils.js",
+      "occurrences": 3,
+      "legacy_pattern": "for loop with var",
+      "modern_replacement": "array methods or for...of",
+      "examples": {
+        "before": "for (var i = 0; i < items.length; i++) {\n  console.log(items[i]);\n}",
+        "after": "items.forEach(item => console.log(item));\n// or\nfor (const item of items) {\n  console.log(item);\n}"
+      }
+    },
+    {
+      "id": "q-promises",
+      "category": "deprecated-api",
+      "severity": "warning",
+      "message": "Replace Q promises with native Promise API.",
+      "file": "src/utils.js",
+      "occurrences": 2,
+      "legacy_pattern": "Q promises library",
+      "modern_replacement": "native Promises",
+      "examples": {
+        "before": "const deferred = Q.defer();\nsetTimeout(() => deferred.resolve(value), 1000);\nreturn deferred.promise;",
+        "after": "return new Promise(resolve => {\n  setTimeout(() => resolve(value), 1000);\n});"
+      }
+    },
+    {
+      "id": "no-var",
+      "category": "javascript-modernization",
+      "severity": "warning",
+      "message": "Avoid using var. Use let or const instead.",
+      "file": "src/index.js",
+      "occurrences": 17,
+      "legacy_pattern": "var",
+      "modern_replacement": "let or const",
+      "examples": {
+        "before": "var x = 1;",
+        "after": "const x = 1; // or let x = 1; if reassignment is needed"
+      }
+    },
+    {
+      "id": "require-commonjs",
+      "category": "module-system",
+      "severity": "info",
+      "message": "Consider migrating from CommonJS require() to ES6 import.",
+      "file": "src/index.js",
+      "occurrences": 5,
+      "legacy_pattern": "require()",
+      "modern_replacement": "import",
+      "examples": {
+        "before": "const express = require('express');",
+        "after": "import express from 'express';"
+      }
+    },
+    {
+      "id": "module-exports",
+      "category": "module-system",
+      "severity": "info",
+      "message": "Consider migrating from CommonJS module.exports to ES6 export.",
+      "file": "src/index.js",
+      "occurrences": 1,
+      "legacy_pattern": "module.exports",
+      "modern_replacement": "export default or export",
+      "examples": {
+        "before": "module.exports = myFunction;",
+        "after": "export default myFunction;"
+      }
+    },
+    {
+      "id": "for-loop-legacy",
+      "category": "array-operations",
+      "severity": "info",
+      "message": "Use array methods (map, filter, forEach) or for...of loop.",
+      "file": "src/index.js",
+      "occurrences": 1,
+      "legacy_pattern": "for loop with var",
+      "modern_replacement": "array methods or for...of",
+      "examples": {
+        "before": "for (var i = 0; i < items.length; i++) {\n  console.log(items[i]);\n}",
+        "after": "items.forEach(item => console.log(item));\n// or\nfor (const item of items) {\n  console.log(item);\n}"
+      }
+    },
+    {
+      "id": "request-library",
+      "category": "deprecated-api",
+      "severity": "error",
+      "message": "The \"request\" library is deprecated. Use axios or node-fetch.",
+      "file": "src/index.js",
+      "occurrences": 1,
+      "legacy_pattern": "request library",
+      "modern_replacement": "axios or node-fetch",
+      "examples": {
+        "before": "const request = require('request');\nrequest.get(url, callback);",
+        "after": "import axios from 'axios';\nconst response = await axios.get(url);"
+      }
+    },
+    {
+      "id": "async-library",
+      "category": "deprecated-api",
+      "severity": "warning",
+      "message": "Replace async library with native async/await.",
+      "file": "src/index.js",
+      "occurrences": 1,
+      "legacy_pattern": "async library",
+      "modern_replacement": "native async/await",
+      "examples": {
+        "before": "async.map(items, processItem, callback);",
+        "after": "const results = await Promise.all(items.map(item => processItem(item)));"
+      }
+    },
+    {
+      "id": "moment-js",
+      "category": "deprecated-api",
+      "severity": "info",
+      "message": "Moment.js is in maintenance mode. Consider date-fns or dayjs.",
+      "file": "src/index.js",
+      "occurrences": 1,
+      "legacy_pattern": "moment.js",
+      "modern_replacement": "date-fns or dayjs",
+      "examples": {
+        "before": "const moment = require('moment');\nconst formatted = moment(date).format('YYYY-MM-DD');",
+        "after": "import { format } from 'date-fns';\nconst formatted = format(date, 'yyyy-MM-dd');"
+      }
+    }
+  ],
+  "modernizationRules": {
+    "dependencyRules": [
+      {
+        "id": "dep-express-outdated",
+        "category": "dependency-modernization",
+        "type": "outdated",
+        "severity": "warning",
+        "package": "express",
+        "legacy_pattern": "\"express\": \"3.21.2\"",
+        "modern_replacement": "\"express\": \"^4.19.2\"",
+        "message": "Package \"express\" version 3.21.2 is outdated. Update to 4.19.2.",
+        "action": "update",
+        "priority": 3,
+        "estimatedEffort": "medium",
+        "examples": {
+          "before": "const express = require('express');",
+          "after": "// Update package.json:\n\"express\": \"^4.19.2\""
+        }
+      },
+      {
+        "id": "dep-lodash-outdated",
+        "category": "dependency-modernization",
+        "type": "outdated",
+        "severity": "warning",
+        "package": "lodash",
+        "legacy_pattern": "\"lodash\": \"3.10.1\"",
+        "modern_replacement": "\"lodash\": \"^4.17.21\"",
+        "message": "Package \"lodash\" version 3.10.1 is outdated. Update to 4.17.21.",
+        "action": "update",
+        "priority": 3,
+        "estimatedEffort": "medium",
+        "examples": {
+          "before": "const lodash = require('lodash');",
+          "after": "// Update package.json:\n\"lodash\": \"^4.17.21\""
+        }
+      },
+      {
+        "id": "dep-request-deprecated",
+        "category": "dependency-modernization",
+        "type": "deprecated",
+        "severity": "error",
+        "package": "request",
+        "legacy_pattern": "\"request\": \"2.88.0\"",
+        "modern_replacement": "axios",
+        "message": "Package \"request\" is deprecated. No longer maintained Replace with axios.",
+        "action": "replace",
+        "priority": 2,
+        "estimatedEffort": "high",
+        "examples": {
+          "before": "const request = require('request');",
+          "after": "const axios = require('axios');"
+        }
+      },
+      {
+        "id": "dep-moment-outdated",
+        "category": "dependency-modernization",
+        "type": "outdated",
+        "severity": "warning",
+        "package": "moment",
+        "legacy_pattern": "\"moment\": \"2.24.0\"",
+        "modern_replacement": "\"moment\": \"^2.29.4\"",
+        "message": "Package \"moment\" version 2.24.0 is outdated. Update to 2.29.4.",
+        "action": "update",
+        "priority": 3,
+        "estimatedEffort": "medium",
+        "examples": {
+          "before": "const moment = require('moment');",
+          "after": "// Update package.json:\n\"moment\": \"^2.29.4\""
+        }
+      },
+      {
+        "id": "dep-async-deprecated",
+        "category": "dependency-modernization",
+        "type": "deprecated",
+        "severity": "error",
+        "package": "async",
+        "legacy_pattern": "\"async\": \"2.6.1\"",
+        "modern_replacement": "native-async-await",
+        "message": "Package \"async\" is legacy. Native async/await is preferred Replace with native-async-await.",
+        "action": "replace",
+        "priority": 2,
+        "estimatedEffort": "high",
+        "examples": {
+          "before": "const async = require('async');",
+          "after": "const native-async-await = require('native-async-await');"
+        }
+      },
+      {
+        "id": "dep-jquery-deprecated",
+        "category": "dependency-modernization",
+        "type": "deprecated",
+        "severity": "error",
+        "package": "jquery",
+        "legacy_pattern": "\"jquery\": \"2.2.4\"",
+        "modern_replacement": "native-dom-apis",
+        "message": "Package \"jquery\" is not-recommended-server. Not needed for server-side JavaScript Replace with native-dom-apis.",
+        "action": "replace",
+        "priority": 2,
+        "estimatedEffort": "high",
+        "examples": {
+          "before": "const jquery = require('jquery');",
+          "after": "const native-dom-apis = require('native-dom-apis');"
+        }
+      },
+      {
+        "id": "dep-underscore-deprecated",
+        "category": "dependency-modernization",
+        "type": "deprecated",
+        "severity": "error",
+        "package": "underscore",
+        "legacy_pattern": "\"underscore\": \"1.8.3\"",
+        "modern_replacement": "lodash",
+        "message": "Package \"underscore\" is legacy. Native array methods and lodash are preferred Replace with lodash.",
+        "action": "replace",
+        "priority": 2,
+        "estimatedEffort": "high",
+        "examples": {
+          "before": "const underscore = require('underscore');",
+          "after": "const lodash = require('lodash');"
+        }
+      },
+      {
+        "id": "dep-bluebird-deprecated",
+        "category": "dependency-modernization",
+        "type": "deprecated",
+        "severity": "error",
+        "package": "bluebird",
+        "legacy_pattern": "\"bluebird\": \"3.5.0\"",
+        "modern_replacement": "native-promises",
+        "message": "Package \"bluebird\" is legacy. Native Promises have caught up in performance Replace with native-promises.",
+        "action": "replace",
+        "priority": 2,
+        "estimatedEffort": "high",
+        "examples": {
+          "before": "const bluebird = require('bluebird');",
+          "after": "const native-promises = require('native-promises');"
+        }
+      },
+      {
+        "id": "dep-q-deprecated",
+        "category": "dependency-modernization",
+        "type": "deprecated",
+        "severity": "error",
+        "package": "q",
+        "legacy_pattern": "\"q\": \"1.5.1\"",
+        "modern_replacement": "native-promises",
+        "message": "Package \"q\" is deprecated. Native Promises are standard Replace with native-promises.",
+        "action": "replace",
+        "priority": 2,
+        "estimatedEffort": "high",
+        "examples": {
+          "before": "const q = require('q');",
+          "after": "const native-promises = require('native-promises');"
+        }
+      },
+      {
+        "id": "dep-body-parser-outdated",
+        "category": "dependency-modernization",
+        "type": "outdated",
+        "severity": "warning",
+        "package": "body-parser",
+        "legacy_pattern": "\"body-parser\": \"1.18.3\"",
+        "modern_replacement": "\"body-parser\": \"^1.20.2\"",
+        "message": "Package \"body-parser\" version 1.18.3 is outdated. Update to 1.20.2.",
+        "action": "update",
+        "priority": 3,
+        "estimatedEffort": "medium",
+        "examples": {
+          "before": "const body-parser = require('body-parser');",
+          "after": "// Update package.json:\n\"body-parser\": \"^1.20.2\""
+        }
+      },
+      {
+        "id": "dep-gulp-deprecated",
+        "category": "dependency-modernization",
+        "type": "deprecated",
+        "severity": "error",
+        "package": "gulp",
+        "legacy_pattern": "\"gulp\": \"3.9.1\"",
+        "modern_replacement": "npm-scripts",
+        "message": "Package \"gulp\" is legacy. Modern build tools are preferred Replace with npm-scripts.",
+        "action": "replace",
+        "priority": 2,
+        "estimatedEffort": "high",
+        "examples": {
+          "before": "const gulp = require('gulp');",
+          "after": "const npm-scripts = require('npm-scripts');"
+        }
+      },
+      {
+        "id": "dep-grunt-deprecated",
+        "category": "dependency-modernization",
+        "type": "deprecated",
+        "severity": "error",
+        "package": "grunt",
+        "legacy_pattern": "\"grunt\": \"1.0.1\"",
+        "modern_replacement": "npm-scripts",
+        "message": "Package \"grunt\" is legacy. Modern build tools are preferred Replace with npm-scripts.",
+        "action": "replace",
+        "priority": 2,
+        "estimatedEffort": "high",
+        "examples": {
+          "before": "const grunt = require('grunt');",
+          "after": "const npm-scripts = require('npm-scripts');"
+        }
+      },
+      {
+        "id": "dep-express-security",
+        "category": "dependency-modernization",
+        "type": "security",
+        "severity": "error",
+        "package": "express",
+        "legacy_pattern": "\"express\": \"3.21.2\"",
+        "modern_replacement": "Update to latest secure version",
+        "message": "Security vulnerability CVE-2022-24999 in express. Open redirect vulnerability",
+        "action": "update",
+        "priority": 1,
+        "estimatedEffort": "high",
+        "examples": {
+          "before": "const express = require('express');",
+          "after": ""
+        },
+        "cve": "CVE-2022-24999",
+        "securityImpact": "Open redirect vulnerability"
+      },
+      {
+        "id": "dep-lodash-security",
+        "category": "dependency-modernization",
+        "type": "security",
+        "severity": "error",
+        "package": "lodash",
+        "legacy_pattern": "\"lodash\": \"3.10.1\"",
+        "modern_replacement": "Update to latest secure version",
+        "message": "Security vulnerability CVE-2021-23337 in lodash. Command injection vulnerability",
+        "action": "update",
+        "priority": 1,
+        "estimatedEffort": "high",
+        "examples": {
+          "before": "const lodash = require('lodash');",
+          "after": ""
+        },
+        "cve": "CVE-2021-23337",
+        "securityImpact": "Command injection vulnerability"
+      },
+      {
+        "id": "dep-moment-security",
+        "category": "dependency-modernization",
+        "type": "security",
+        "severity": "error",
+        "package": "moment",
+        "legacy_pattern": "\"moment\": \"2.24.0\"",
+        "modern_replacement": "Update to latest secure version",
+        "message": "Security vulnerability CVE-2022-24785 in moment. Path traversal vulnerability",
+        "action": "update",
+        "priority": 1,
+        "estimatedEffort": "high",
+        "examples": {
+          "before": "const moment = require('moment');",
+          "after": ""
+        },
+        "cve": "CVE-2022-24785",
+        "securityImpact": "Path traversal vulnerability"
+      }
+    ],
+    "patternRules": [
+      {
+        "id": "no-var",
+        "category": "javascript-modernization",
+        "severity": "warning",
+        "legacy_pattern": "var",
+        "modern_replacement": "let or const",
+        "message": "Avoid using var. Use let or const instead.",
+        "occurrences": 21,
+        "affectedFiles": [
+          "src/utils.js"
+        ],
+        "priority": 2,
+        "estimatedEffort": "medium",
+        "examples": {
+          "before": "var x = 1;",
+          "after": "const x = 1; // or let x = 1; if reassignment is needed"
+        },
+        "locations": [
+          {
+            "file": "src/utils.js",
+            "line": 3,
+            "code": "var _ = require('lodash');"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 6,
+            "code": "// Using var and old function syntax"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 13,
+            "code": "var d = new Date(date);"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 15,
+            "code": "var day = '' + d.getDate();"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 26,
+            "code": "var deferred = Q.defer();"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 37,
+            "code": "var result = [];"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 48,
+            "code": "var keys = path.split('.');"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 51,
+            "code": "for (var i = 0; i < keys.length; i++) {"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 64,
+            "code": "var total = 0;"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 73,
+            "code": "var fs = require('fs');"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 81,
+            "code": "var config = JSON.parse(data);"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 89,
+            "code": "// Using var in closure (common scope issue)"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 91,
+            "code": "var counters = [];"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 93,
+            "code": "for (var i = 0; i < count; i++) {"
+          }
+        ]
+      },
+      {
+        "id": "callback-pattern",
+        "category": "async-modernization",
+        "severity": "warning",
+        "legacy_pattern": "callback functions",
+        "modern_replacement": "async/await",
+        "message": "Replace callback pattern with async/await for better readability.",
+        "occurrences": 1,
+        "affectedFiles": [
+          "src/utils.js"
+        ],
+        "priority": 2,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "function fetchData(id, callback) {\n  request.get(url, callback);\n}",
+          "after": "async function fetchData(id) {\n  const response = await axios.get(url);\n  return response.data;\n}"
+        },
+        "locations": [
+          {
+            "file": "src/utils.js",
+            "line": 72,
+            "code": "Utils.prototype.readConfigFile = function(filename, callback) {"
+          }
+        ]
+      },
+      {
+        "id": "require-commonjs",
+        "category": "module-system",
+        "severity": "info",
+        "legacy_pattern": "require()",
+        "modern_replacement": "import",
+        "message": "Consider migrating from CommonJS require() to ES6 import.",
+        "occurrences": 3,
+        "affectedFiles": [
+          "src/utils.js"
+        ],
+        "priority": 3,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "const express = require('express');",
+          "after": "import express from 'express';"
+        },
+        "locations": [
+          {
+            "file": "src/utils.js",
+            "line": 3,
+            "code": "var _ = require('lodash');"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 73,
+            "code": "var fs = require('fs');"
+          }
+        ]
+      },
+      {
+        "id": "module-exports",
+        "category": "module-system",
+        "severity": "info",
+        "legacy_pattern": "module.exports",
+        "modern_replacement": "export default or export",
+        "message": "Consider migrating from CommonJS module.exports to ES6 export.",
+        "occurrences": 1,
+        "affectedFiles": [
+          "src/utils.js"
+        ],
+        "priority": 3,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "module.exports = myFunction;",
+          "after": "export default myFunction;"
+        },
+        "locations": [
+          {
+            "file": "src/utils.js",
+            "line": 103,
+            "code": "module.exports = new Utils();"
+          }
+        ]
+      },
+      {
+        "id": "function-expression",
+        "category": "function-syntax",
+        "severity": "info",
+        "legacy_pattern": "function expressions with var",
+        "modern_replacement": "arrow functions with const",
+        "message": "Use arrow functions with const for better scoping.",
+        "occurrences": 1,
+        "affectedFiles": [
+          "src/utils.js"
+        ],
+        "priority": 3,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "var add = function(a, b) { return a + b; };",
+          "after": "const add = (a, b) => a + b;"
+        },
+        "locations": [
+          {
+            "file": "src/utils.js",
+            "line": 7,
+            "code": "var Utils = function() {"
+          }
+        ]
+      },
+      {
+        "id": "prototype-method",
+        "category": "oop-modernization",
+        "severity": "warning",
+        "legacy_pattern": "prototype-based methods",
+        "modern_replacement": "ES6 class methods",
+        "message": "Use ES6 classes instead of prototype-based inheritance.",
+        "occurrences": 7,
+        "affectedFiles": [
+          "src/utils.js"
+        ],
+        "priority": 2,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "Person.prototype.greet = function() { return \"Hello\"; };",
+          "after": "class Person {\n  greet() { return \"Hello\"; }\n}"
+        },
+        "locations": [
+          {
+            "file": "src/utils.js",
+            "line": 12,
+            "code": "Utils.prototype.formatDate = function(date) {"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 25,
+            "code": "Utils.prototype.delayedOperation = function(value, delay) {"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 36,
+            "code": "Utils.prototype.filterActiveItems = function(items) {"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 47,
+            "code": "Utils.prototype.getNestedProperty = function(obj, path) {"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 63,
+            "code": "Utils.prototype.sum = function() {"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 72,
+            "code": "Utils.prototype.readConfigFile = function(filename, callback) {"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 90,
+            "code": "Utils.prototype.createCounters = function(count) {"
+          }
+        ]
+      },
+      {
+        "id": "arguments-object",
+        "category": "function-syntax",
+        "severity": "warning",
+        "legacy_pattern": "arguments object",
+        "modern_replacement": "rest parameters",
+        "message": "Use rest parameters instead of the arguments object.",
+        "occurrences": 1,
+        "affectedFiles": [
+          "src/utils.js"
+        ],
+        "priority": 2,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "function sum() {\n  var total = 0;\n  for (var i = 0; i < arguments.length; i++) {\n    total += arguments[i];\n  }\n  return total;\n}",
+          "after": "function sum(...numbers) {\n  return numbers.reduce((total, num) => total + num, 0);\n}"
+        },
+        "locations": [
+          {
+            "file": "src/utils.js",
+            "line": 66,
+            "code": "total += arguments[i];"
+          }
+        ]
+      },
+      {
+        "id": "for-loop-legacy",
+        "category": "array-operations",
+        "severity": "info",
+        "legacy_pattern": "for loop with var",
+        "modern_replacement": "array methods or for...of",
+        "message": "Use array methods (map, filter, forEach) or for...of loop.",
+        "occurrences": 3,
+        "affectedFiles": [
+          "src/utils.js"
+        ],
+        "priority": 3,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "for (var i = 0; i < items.length; i++) {\n  console.log(items[i]);\n}",
+          "after": "items.forEach(item => console.log(item));\n// or\nfor (const item of items) {\n  console.log(item);\n}"
+        },
+        "locations": [
+          {
+            "file": "src/utils.js",
+            "line": 38,
+            "code": "for (var i = 0; i < items.length; i++) {"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 51,
+            "code": "for (var i = 0; i < keys.length; i++) {"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 65,
+            "code": "for (var i = 0; i < arguments.length; i++) {"
+          }
+        ]
+      },
+      {
+        "id": "q-promises",
+        "category": "deprecated-api",
+        "severity": "warning",
+        "legacy_pattern": "Q promises library",
+        "modern_replacement": "native Promises",
+        "message": "Replace Q promises with native Promise API.",
+        "occurrences": 2,
+        "affectedFiles": [
+          "src/utils.js"
+        ],
+        "priority": 2,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "const deferred = Q.defer();\nsetTimeout(() => deferred.resolve(value), 1000);\nreturn deferred.promise;",
+          "after": "return new Promise(resolve => {\n  setTimeout(() => resolve(value), 1000);\n});"
+        },
+        "locations": [
+          {
+            "file": "src/utils.js",
+            "line": 4,
+            "code": "var Q = require('q');"
+          },
+          {
+            "file": "src/utils.js",
+            "line": 26,
+            "code": "var deferred = Q.defer();"
+          }
+        ]
+      },
+      {
+        "id": "no-var",
+        "category": "javascript-modernization",
+        "severity": "warning",
+        "legacy_pattern": "var",
+        "modern_replacement": "let or const",
+        "message": "Avoid using var. Use let or const instead.",
+        "occurrences": 17,
+        "affectedFiles": [
+          "src/index.js"
+        ],
+        "priority": 2,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "var x = 1;",
+          "after": "const x = 1; // or let x = 1; if reassignment is needed"
+        },
+        "locations": [
+          {
+            "file": "src/index.js",
+            "line": 3,
+            "code": "var express = require('express');"
+          },
+          {
+            "file": "src/index.js",
+            "line": 5,
+            "code": "var async = require('async');"
+          },
+          {
+            "file": "src/index.js",
+            "line": 7,
+            "code": "var moment = require('moment');"
+          },
+          {
+            "file": "src/index.js",
+            "line": 9,
+            "code": "var app = express();"
+          },
+          {
+            "file": "src/index.js",
+            "line": 12,
+            "code": "// Using var instead of let/const"
+          },
+          {
+            "file": "src/index.js",
+            "line": 14,
+            "code": "var config = {"
+          },
+          {
+            "file": "src/index.js",
+            "line": 37,
+            "code": "var filteredData = _.filter(user.data, function(item) {"
+          },
+          {
+            "file": "src/index.js",
+            "line": 42,
+            "code": "var message = 'User ' + user.name + ' has ' + filteredData.length + ' active items';"
+          },
+          {
+            "file": "src/index.js",
+            "line": 66,
+            "code": "var userId = req.params.id;"
+          },
+          {
+            "file": "src/index.js",
+            "line": 76,
+            "code": "// Using var in loop (common mistake)"
+          },
+          {
+            "file": "src/index.js",
+            "line": 78,
+            "code": "var userList = [];"
+          },
+          {
+            "file": "src/index.js",
+            "line": 80,
+            "code": "for (var i = 0; i < users.length; i++) {"
+          }
+        ]
+      },
+      {
+        "id": "require-commonjs",
+        "category": "module-system",
+        "severity": "info",
+        "legacy_pattern": "require()",
+        "modern_replacement": "import",
+        "message": "Consider migrating from CommonJS require() to ES6 import.",
+        "occurrences": 5,
+        "affectedFiles": [
+          "src/index.js"
+        ],
+        "priority": 3,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "const express = require('express');",
+          "after": "import express from 'express';"
+        },
+        "locations": [
+          {
+            "file": "src/index.js",
+            "line": 3,
+            "code": "var express = require('express');"
+          },
+          {
+            "file": "src/index.js",
+            "line": 5,
+            "code": "var async = require('async');"
+          },
+          {
+            "file": "src/index.js",
+            "line": 7,
+            "code": "var moment = require('moment');"
+          }
+        ]
+      },
+      {
+        "id": "module-exports",
+        "category": "module-system",
+        "severity": "info",
+        "legacy_pattern": "module.exports",
+        "modern_replacement": "export default or export",
+        "message": "Consider migrating from CommonJS module.exports to ES6 export.",
+        "occurrences": 1,
+        "affectedFiles": [
+          "src/index.js"
+        ],
+        "priority": 3,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "module.exports = myFunction;",
+          "after": "export default myFunction;"
+        },
+        "locations": [
+          {
+            "file": "src/index.js",
+            "line": 104,
+            "code": "module.exports = app;"
+          }
+        ]
+      },
+      {
+        "id": "for-loop-legacy",
+        "category": "array-operations",
+        "severity": "info",
+        "legacy_pattern": "for loop with var",
+        "modern_replacement": "array methods or for...of",
+        "message": "Use array methods (map, filter, forEach) or for...of loop.",
+        "occurrences": 1,
+        "affectedFiles": [
+          "src/index.js"
+        ],
+        "priority": 3,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "for (var i = 0; i < items.length; i++) {\n  console.log(items[i]);\n}",
+          "after": "items.forEach(item => console.log(item));\n// or\nfor (const item of items) {\n  console.log(item);\n}"
+        },
+        "locations": [
+          {
+            "file": "src/index.js",
+            "line": 80,
+            "code": "for (var i = 0; i < users.length; i++) {"
+          }
+        ]
+      },
+      {
+        "id": "request-library",
+        "category": "deprecated-api",
+        "severity": "error",
+        "legacy_pattern": "request library",
+        "modern_replacement": "axios or node-fetch",
+        "message": "The \"request\" library is deprecated. Use axios or node-fetch.",
+        "occurrences": 1,
+        "affectedFiles": [
+          "src/index.js"
+        ],
+        "priority": 1,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "const request = require('request');\nrequest.get(url, callback);",
+          "after": "import axios from 'axios';\nconst response = await axios.get(url);"
+        },
+        "locations": [
+          {
+            "file": "src/index.js",
+            "line": 4,
+            "code": "var request = require('request');"
+          }
+        ]
+      },
+      {
+        "id": "async-library",
+        "category": "deprecated-api",
+        "severity": "warning",
+        "legacy_pattern": "async library",
+        "modern_replacement": "native async/await",
+        "message": "Replace async library with native async/await.",
+        "occurrences": 1,
+        "affectedFiles": [
+          "src/index.js"
+        ],
+        "priority": 2,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "async.map(items, processItem, callback);",
+          "after": "const results = await Promise.all(items.map(item => processItem(item)));"
+        },
+        "locations": [
+          {
+            "file": "src/index.js",
+            "line": 5,
+            "code": "var async = require('async');"
+          }
+        ]
+      },
+      {
+        "id": "moment-js",
+        "category": "deprecated-api",
+        "severity": "info",
+        "legacy_pattern": "moment.js",
+        "modern_replacement": "date-fns or dayjs",
+        "message": "Moment.js is in maintenance mode. Consider date-fns or dayjs.",
+        "occurrences": 1,
+        "affectedFiles": [
+          "src/index.js"
+        ],
+        "priority": 3,
+        "estimatedEffort": "low",
+        "examples": {
+          "before": "const moment = require('moment');\nconst formatted = moment(date).format('YYYY-MM-DD');",
+          "after": "import { format } from 'date-fns';\nconst formatted = format(date, 'yyyy-MM-dd');"
+        },
+        "locations": [
+          {
+            "file": "src/index.js",
+            "line": 7,
+            "code": "var moment = require('moment');"
+          }
+        ]
+      }
+    ]
+  },
+  "recommendations": {
+    "immediate": [],
+    "highPriority": [
+      {
+        "id": "dep-request-deprecated",
+        "message": "Package \"request\" is deprecated. No longer maintained Replace with axios.",
+        "action": "replace",
+        "priority": "high"
+      },
+      {
+        "id": "dep-async-deprecated",
+        "message": "Package \"async\" is legacy. Native async/await is preferred Replace with native-async-await.",
+        "action": "replace",
+        "priority": "high"
+      },
+      {
+        "id": "dep-jquery-deprecated",
+        "message": "Package \"jquery\" is not-recommended-server. Not needed for server-side JavaScript Replace with native-dom-apis.",
+        "action": "replace",
+        "priority": "high"
+      },
+      {
+        "id": "dep-underscore-deprecated",
+        "message": "Package \"underscore\" is legacy. Native array methods and lodash are preferred Replace with lodash.",
+        "action": "replace",
+        "priority": "high"
+      },
+      {
+        "id": "dep-bluebird-deprecated",
+        "message": "Package \"bluebird\" is legacy. Native Promises have caught up in performance Replace with native-promises.",
+        "action": "replace",
+        "priority": "high"
+      },
+      {
+        "id": "dep-q-deprecated",
+        "message": "Package \"q\" is deprecated. Native Promises are standard Replace with native-promises.",
+        "action": "replace",
+        "priority": "high"
+      },
+      {
+        "id": "dep-gulp-deprecated",
+        "message": "Package \"gulp\" is legacy. Modern build tools are preferred Replace with npm-scripts.",
+        "action": "replace",
+        "priority": "high"
+      },
+      {
+        "id": "dep-grunt-deprecated",
+        "message": "Package \"grunt\" is legacy. Modern build tools are preferred Replace with npm-scripts.",
+        "action": "replace",
+        "priority": "high"
+      },
+      {
+        "id": "dep-express-security",
+        "message": "Security vulnerability CVE-2022-24999 in express. Open redirect vulnerability",
+        "action": "update",
+        "priority": "high"
+      },
+      {
+        "id": "dep-lodash-security",
+        "message": "Security vulnerability CVE-2021-23337 in lodash. Command injection vulnerability",
+        "action": "update",
+        "priority": "high"
+      }
+    ],
+    "medium": [
+      {
+        "id": "dep-express-outdated",
+        "message": "Package \"express\" version 3.21.2 is outdated. Update to 4.19.2.",
+        "priority": "medium"
+      },
+      {
+        "id": "dep-lodash-outdated",
+        "message": "Package \"lodash\" version 3.10.1 is outdated. Update to 4.17.21.",
+        "priority": "medium"
+      },
+      {
+        "id": "dep-moment-outdated",
+        "message": "Package \"moment\" version 2.24.0 is outdated. Update to 2.29.4.",
+        "priority": "medium"
+      },
+      {
+        "id": "dep-body-parser-outdated",
+        "message": "Package \"body-parser\" version 1.18.3 is outdated. Update to 1.20.2.",
+        "priority": "medium"
+      },
+      {
+        "id": "no-var",
+        "message": "Avoid using var. Use let or const instead.",
+        "priority": "medium"
+      },
+      {
+        "id": "callback-pattern",
+        "message": "Replace callback pattern with async/await for better readability.",
+        "priority": "medium"
+      },
+      {
+        "id": "prototype-method",
+        "message": "Use ES6 classes instead of prototype-based inheritance.",
+        "priority": "medium"
+      },
+      {
+        "id": "arguments-object",
+        "message": "Use rest parameters instead of the arguments object.",
+        "priority": "medium"
+      },
+      {
+        "id": "q-promises",
+        "message": "Replace Q promises with native Promise API.",
+        "priority": "medium"
+      },
+      {
+        "id": "no-var",
+        "message": "Avoid using var. Use let or const instead.",
+        "priority": "medium"
+      }
+    ],
+    "low": [
+      {
+        "id": "require-commonjs",
+        "message": "Consider migrating from CommonJS require() to ES6 import.",
+        "priority": "low"
+      },
+      {
+        "id": "module-exports",
+        "message": "Consider migrating from CommonJS module.exports to ES6 export.",
+        "priority": "low"
+      },
+      {
+        "id": "function-expression",
+        "message": "Use arrow functions with const for better scoping.",
+        "priority": "low"
+      },
+      {
+        "id": "for-loop-legacy",
+        "message": "Use array methods (map, filter, forEach) or for...of loop.",
+        "priority": "low"
+      },
+      {
+        "id": "require-commonjs",
+        "message": "Consider migrating from CommonJS require() to ES6 import.",
+        "priority": "low"
+      },
+      {
+        "id": "module-exports",
+        "message": "Consider migrating from CommonJS module.exports to ES6 export.",
+        "priority": "low"
+      },
+      {
+        "id": "for-loop-legacy",
+        "message": "Use array methods (map, filter, forEach) or for...of loop.",
+        "priority": "low"
+      },
+      {
+        "id": "moment-js",
+        "message": "Moment.js is in maintenance mode. Consider date-fns or dayjs.",
+        "priority": "low"
+      }
+    ]
+  },
+  "aiPrompts": [
+    {
+      "id": "migrate-critical-dependencies",
+      "type": "dependency-migration",
+      "priority": "critical",
+      "prompt": "\n# Dependency Migration Task\n\n## Packages to Migrate:\n\n### request\n- **Current:** \"request\": \"2.88.0\"\n- **Target:** axios\n- **Reason:** Package \"request\" is deprecated. No longer maintained Replace with axios.\n\n\n### async\n- **Current:** \"async\": \"2.6.1\"\n- **Target:** native-async-await\n- **Reason:** Package \"async\" is legacy. Native async/await is preferred Replace with native-async-await.\n\n\n### jquery\n- **Current:** \"jquery\": \"2.2.4\"\n- **Target:** native-dom-apis\n- **Reason:** Package \"jquery\" is not-recommended-server. Not needed for server-side JavaScript Replace with native-dom-apis.\n\n\n### underscore\n- **Current:** \"underscore\": \"1.8.3\"\n- **Target:** lodash\n- **Reason:** Package \"underscore\" is legacy. Native array methods and lodash are preferred Replace with lodash.\n\n\n### bluebird\n- **Current:** \"bluebird\": \"3.5.0\"\n- **Target:** native-promises\n- **Reason:** Package \"bluebird\" is legacy. Native Promises have caught up in performance Replace with native-promises.\n\n\n### q\n- **Current:** \"q\": \"1.5.1\"\n- **Target:** native-promises\n- **Reason:** Package \"q\" is deprecated. Native Promises are standard Replace with native-promises.\n\n\n### gulp\n- **Current:** \"gulp\": \"3.9.1\"\n- **Target:** npm-scripts\n- **Reason:** Package \"gulp\" is legacy. Modern build tools are preferred Replace with npm-scripts.\n\n\n### grunt\n- **Current:** \"grunt\": \"1.0.1\"\n- **Target:** npm-scripts\n- **Reason:** Package \"grunt\" is legacy. Modern build tools are preferred Replace with npm-scripts.\n\n\n### express\n- **Current:** \"express\": \"3.21.2\"\n- **Target:** Update to latest secure version\n- **Reason:** Security vulnerability CVE-2022-24999 in express. Open redirect vulnerability\n\n\n### lodash\n- **Current:** \"lodash\": \"3.10.1\"\n- **Target:** Update to latest secure version\n- **Reason:** Security vulnerability CVE-2021-23337 in lodash. Command injection vulnerability\n\n\n### moment\n- **Current:** \"moment\": \"2.24.0\"\n- **Target:** Update to latest secure version\n- **Reason:** Security vulnerability CVE-2022-24785 in moment. Path traversal vulnerability\n\n\n## Instructions:\n1. Update package.json with new versions/packages\n2. Update all import/require statements\n3. Refactor code to use new API patterns\n4. Test all affected functionality\n5. Update documentation\n\n## Expected Output:\n- Updated package.json\n- Refactored source files\n- Migration summary report\n",
+      "affectedPackages": [
+        "request",
+        "async",
+        "jquery",
+        "underscore",
+        "bluebird",
+        "q",
+        "gulp",
+        "grunt",
+        "express",
+        "lodash",
+        "moment"
+      ]
+    },
+    {
+      "id": "migrate-javascript-modernization",
+      "type": "pattern-migration",
+      "category": "javascript-modernization",
+      "priority": 2,
+      "prompt": "\n# Code Pattern Migration: javascript-modernization\n\n## Patterns to Modernize:\n\n### no-var\n- **Legacy Pattern:** var\n- **Modern Replacement:** let or const\n- **Occurrences:** 21\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nvar x = 1;\n\n// After\nconst x = 1; // or let x = 1; if reassignment is needed\n```\n\n\n### no-var\n- **Legacy Pattern:** var\n- **Modern Replacement:** let or const\n- **Occurrences:** 17\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nvar x = 1;\n\n// After\nconst x = 1; // or let x = 1; if reassignment is needed\n```\n\n\n## Migration Steps:\n1. Identify all occurrences of legacy patterns\n2. Apply modern replacements systematically\n3. Ensure backward compatibility where needed\n4. Run tests to verify functionality\n5. Update code comments and documentation\n",
+      "affectedFiles": [
+        "src/utils.js",
+        "src/index.js"
+      ],
+      "totalOccurrences": 38
+    },
+    {
+      "id": "migrate-async-modernization",
+      "type": "pattern-migration",
+      "category": "async-modernization",
+      "priority": 2,
+      "prompt": "\n# Code Pattern Migration: async-modernization\n\n## Patterns to Modernize:\n\n### callback-pattern\n- **Legacy Pattern:** callback functions\n- **Modern Replacement:** async/await\n- **Occurrences:** 1\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nfunction fetchData(id, callback) {\n  request.get(url, callback);\n}\n\n// After\nasync function fetchData(id) {\n  const response = await axios.get(url);\n  return response.data;\n}\n```\n\n\n## Migration Steps:\n1. Identify all occurrences of legacy patterns\n2. Apply modern replacements systematically\n3. Ensure backward compatibility where needed\n4. Run tests to verify functionality\n5. Update code comments and documentation\n",
+      "affectedFiles": [
+        "src/utils.js"
+      ],
+      "totalOccurrences": 1
+    },
+    {
+      "id": "migrate-module-system",
+      "type": "pattern-migration",
+      "category": "module-system",
+      "priority": 3,
+      "prompt": "\n# Code Pattern Migration: module-system\n\n## Patterns to Modernize:\n\n### require-commonjs\n- **Legacy Pattern:** require()\n- **Modern Replacement:** import\n- **Occurrences:** 3\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nconst express = require('express');\n\n// After\nimport express from 'express';\n```\n\n\n### module-exports\n- **Legacy Pattern:** module.exports\n- **Modern Replacement:** export default or export\n- **Occurrences:** 1\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nmodule.exports = myFunction;\n\n// After\nexport default myFunction;\n```\n\n\n### require-commonjs\n- **Legacy Pattern:** require()\n- **Modern Replacement:** import\n- **Occurrences:** 5\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nconst express = require('express');\n\n// After\nimport express from 'express';\n```\n\n\n### module-exports\n- **Legacy Pattern:** module.exports\n- **Modern Replacement:** export default or export\n- **Occurrences:** 1\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nmodule.exports = myFunction;\n\n// After\nexport default myFunction;\n```\n\n\n## Migration Steps:\n1. Identify all occurrences of legacy patterns\n2. Apply modern replacements systematically\n3. Ensure backward compatibility where needed\n4. Run tests to verify functionality\n5. Update code comments and documentation\n",
+      "affectedFiles": [
+        "src/utils.js",
+        "src/index.js"
+      ],
+      "totalOccurrences": 10
+    },
+    {
+      "id": "migrate-function-syntax",
+      "type": "pattern-migration",
+      "category": "function-syntax",
+      "priority": 2,
+      "prompt": "\n# Code Pattern Migration: function-syntax\n\n## Patterns to Modernize:\n\n### function-expression\n- **Legacy Pattern:** function expressions with var\n- **Modern Replacement:** arrow functions with const\n- **Occurrences:** 1\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nvar add = function(a, b) { return a + b; };\n\n// After\nconst add = (a, b) => a + b;\n```\n\n\n### arguments-object\n- **Legacy Pattern:** arguments object\n- **Modern Replacement:** rest parameters\n- **Occurrences:** 1\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nfunction sum() {\n  var total = 0;\n  for (var i = 0; i < arguments.length; i++) {\n    total += arguments[i];\n  }\n  return total;\n}\n\n// After\nfunction sum(...numbers) {\n  return numbers.reduce((total, num) => total + num, 0);\n}\n```\n\n\n## Migration Steps:\n1. Identify all occurrences of legacy patterns\n2. Apply modern replacements systematically\n3. Ensure backward compatibility where needed\n4. Run tests to verify functionality\n5. Update code comments and documentation\n",
+      "affectedFiles": [
+        "src/utils.js"
+      ],
+      "totalOccurrences": 2
+    },
+    {
+      "id": "migrate-oop-modernization",
+      "type": "pattern-migration",
+      "category": "oop-modernization",
+      "priority": 2,
+      "prompt": "\n# Code Pattern Migration: oop-modernization\n\n## Patterns to Modernize:\n\n### prototype-method\n- **Legacy Pattern:** prototype-based methods\n- **Modern Replacement:** ES6 class methods\n- **Occurrences:** 7\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nPerson.prototype.greet = function() { return \"Hello\"; };\n\n// After\nclass Person {\n  greet() { return \"Hello\"; }\n}\n```\n\n\n## Migration Steps:\n1. Identify all occurrences of legacy patterns\n2. Apply modern replacements systematically\n3. Ensure backward compatibility where needed\n4. Run tests to verify functionality\n5. Update code comments and documentation\n",
+      "affectedFiles": [
+        "src/utils.js"
+      ],
+      "totalOccurrences": 7
+    },
+    {
+      "id": "migrate-array-operations",
+      "type": "pattern-migration",
+      "category": "array-operations",
+      "priority": 3,
+      "prompt": "\n# Code Pattern Migration: array-operations\n\n## Patterns to Modernize:\n\n### for-loop-legacy\n- **Legacy Pattern:** for loop with var\n- **Modern Replacement:** array methods or for...of\n- **Occurrences:** 3\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nfor (var i = 0; i < items.length; i++) {\n  console.log(items[i]);\n}\n\n// After\nitems.forEach(item => console.log(item));\n// or\nfor (const item of items) {\n  console.log(item);\n}\n```\n\n\n### for-loop-legacy\n- **Legacy Pattern:** for loop with var\n- **Modern Replacement:** array methods or for...of\n- **Occurrences:** 1\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nfor (var i = 0; i < items.length; i++) {\n  console.log(items[i]);\n}\n\n// After\nitems.forEach(item => console.log(item));\n// or\nfor (const item of items) {\n  console.log(item);\n}\n```\n\n\n## Migration Steps:\n1. Identify all occurrences of legacy patterns\n2. Apply modern replacements systematically\n3. Ensure backward compatibility where needed\n4. Run tests to verify functionality\n5. Update code comments and documentation\n",
+      "affectedFiles": [
+        "src/utils.js",
+        "src/index.js"
+      ],
+      "totalOccurrences": 4
+    },
+    {
+      "id": "migrate-deprecated-api",
+      "type": "pattern-migration",
+      "category": "deprecated-api",
+      "priority": 1,
+      "prompt": "\n# Code Pattern Migration: deprecated-api\n\n## Patterns to Modernize:\n\n### q-promises\n- **Legacy Pattern:** Q promises library\n- **Modern Replacement:** native Promises\n- **Occurrences:** 2\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nconst deferred = Q.defer();\nsetTimeout(() => deferred.resolve(value), 1000);\nreturn deferred.promise;\n\n// After\nreturn new Promise(resolve => {\n  setTimeout(() => resolve(value), 1000);\n});\n```\n\n\n### request-library\n- **Legacy Pattern:** request library\n- **Modern Replacement:** axios or node-fetch\n- **Occurrences:** 1\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nconst request = require('request');\nrequest.get(url, callback);\n\n// After\nimport axios from 'axios';\nconst response = await axios.get(url);\n```\n\n\n### async-library\n- **Legacy Pattern:** async library\n- **Modern Replacement:** native async/await\n- **Occurrences:** 1\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nasync.map(items, processItem, callback);\n\n// After\nconst results = await Promise.all(items.map(item => processItem(item)));\n```\n\n\n### moment-js\n- **Legacy Pattern:** moment.js\n- **Modern Replacement:** date-fns or dayjs\n- **Occurrences:** 1\n- **Files Affected:** 1\n\n**Example:**\n```javascript\n// Before\nconst moment = require('moment');\nconst formatted = moment(date).format('YYYY-MM-DD');\n\n// After\nimport { format } from 'date-fns';\nconst formatted = format(date, 'yyyy-MM-dd');\n```\n\n\n## Migration Steps:\n1. Identify all occurrences of legacy patterns\n2. Apply modern replacements systematically\n3. Ensure backward compatibility where needed\n4. Run tests to verify functionality\n5. Update code comments and documentation\n",
+      "affectedFiles": [
+        "src/utils.js",
+        "src/index.js"
+      ],
+      "totalOccurrences": 5
+    },
+    {
+      "id": "comprehensive-migration",
+      "type": "full-migration",
+      "priority": "high",
+      "prompt": "\n# Comprehensive Codebase Modernization\n\n## Overview\nThis project requires modernization to meet IBM standards and best practices.\n\n## Statistics\n- **Critical Issues:** 12\n- **Warnings:** 11\n- **Total Issues:** 31\n\n## Priority Order\n1. **Security Vulnerabilities** (Immediate)\n2. **Deprecated Dependencies** (High Priority)\n3. **Async Pattern Modernization** (High Priority)\n4. **Variable Declaration Updates** (Medium Priority)\n5. **Module System Migration** (Medium Priority)\n6. **Code Style Improvements** (Low Priority)\n\n## Modernization Checklist\n- [ ] Update all dependencies to IBM-approved versions\n- [ ] Replace deprecated packages with modern alternatives\n- [ ] Convert callbacks to async/await\n- [ ] Replace var with const/let\n- [ ] Migrate to ES6 modules (if applicable)\n- [ ] Update to ES6 class syntax\n- [ ] Use template literals for strings\n- [ ] Apply modern array methods\n- [ ] Implement proper error handling\n- [ ] Run security audit and fix vulnerabilities\n\n## Expected Outcome\nA fully modernized codebase that:\n- Meets IBM coding standards\n- Has no security vulnerabilities\n- Uses modern JavaScript patterns\n- Is maintainable and scalable\n- Has improved performance\n"
+    }
+  ]
+}

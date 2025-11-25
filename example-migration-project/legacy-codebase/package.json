@@ -1,0 +1,32 @@
+{
+  "name": "legacy-app",
+  "version": "1.0.0",
+  "description": "Legacy application with outdated dependencies",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "express": "3.21.2",
+    "lodash": "3.10.1",
+    "request": "2.88.0",
+    "moment": "2.24.0",
+    "async": "2.6.1",
+    "jquery": "2.2.4",
+    "underscore": "1.8.3",
+    "bluebird": "3.5.0",
+    "q": "1.5.1",
+    "body-parser": "1.18.3"
+  },
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "grunt": "1.0.1"
+  },
+  "keywords": [
+    "legacy",
+    "outdated"
+  ],
+  "author": "Legacy Team",
+  "license": "ISC"
+}

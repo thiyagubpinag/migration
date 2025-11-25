@@ -1,0 +1,131 @@
+{
+  "name": "IBM Approved Package Versions",
+  "version": "2024.1",
+  "description": "IBM-approved package versions and their minimum supported versions",
+  "lastUpdated": "2024-11-01",
+  "approvedPackages": {
+    "express": {
+      "minVersion": "4.19.0",
+      "recommendedVersion": "4.19.2",
+      "status": "approved",
+      "notes": "Use latest 4.x version for security patches"
+    },
+    "lodash": {
+      "minVersion": "4.17.21",
+      "recommendedVersion": "4.17.21",
+      "status": "approved",
+      "notes": "Version 4.17.21 includes critical security fixes"
+    },
+    "axios": {
+      "minVersion": "1.6.0",
+      "recommendedVersion": "1.6.7",
+      "status": "approved",
+      "notes": "Preferred over 'request' library which is deprecated"
+    },
+    "moment": {
+      "minVersion": "2.29.4",
+      "recommendedVersion": "2.29.4",
+      "status": "maintenance-mode",
+      "notes": "Consider migrating to date-fns or dayjs",
+      "modernAlternative": "date-fns"
+    },
+    "date-fns": {
+      "minVersion": "3.0.0",
+      "recommendedVersion": "3.0.6",
+      "status": "approved",
+      "notes": "Modern alternative to moment.js"
+    },
+    "dayjs": {
+      "minVersion": "1.11.10",
+      "recommendedVersion": "1.11.10",
+      "status": "approved",
+      "notes": "Lightweight alternative to moment.js"
+    },
+    "body-parser": {
+      "minVersion": "1.20.2",
+      "recommendedVersion": "1.20.2",
+      "status": "approved",
+      "notes": "Built into Express 4.16+, consider using express.json() instead"
+    },
+    "node-fetch": {
+      "minVersion": "3.3.2",
+      "recommendedVersion": "3.3.2",
+      "status": "approved",
+      "notes": "Use for Node.js < 18, native fetch available in Node 18+"
+    }
+  },
+  "deprecatedPackages": {
+    "request": {
+      "status": "deprecated",
+      "deprecatedSince": "2020-02-11",
+      "reason": "No longer maintained",
+      "modernAlternative": "axios",
+      "migrationGuide": "https://github.com/request/request/issues/3142"
+    },
+    "async": {
+      "status": "legacy",
+      "reason": "Native async/await is preferred",
+      "modernAlternative": "native-async-await",
+      "notes": "Use native Promise and async/await syntax"
+    },
+    "q": {
+      "status": "deprecated",
+      "reason": "Native Promises are standard",
+      "modernAlternative": "native-promises",
+      "notes": "Use native Promise API"
+    },
+    "bluebird": {
+      "status": "legacy",
+      "reason": "Native Promises have caught up in performance",
+      "modernAlternative": "native-promises",
+      "notes": "Native Promises are now sufficient for most use cases"
+    },
+    "jquery": {
+      "status": "not-recommended-server",
+      "reason": "Not needed for server-side JavaScript",
+      "modernAlternative": "native-dom-apis",
+      "notes": "Use native DOM APIs or modern frameworks"
+    },
+    "underscore": {
+      "status": "legacy",
+      "reason": "Native array methods and lodash are preferred",
+      "modernAlternative": "lodash",
+      "notes": "Lodash is more actively maintained"
+    },
+    "gulp": {
+      "status": "legacy",
+      "reason": "Modern build tools are preferred",
+      "modernAlternative": "npm-scripts",
+      "notes": "Consider npm scripts, webpack, or vite"
+    },
+    "grunt": {
+      "status": "legacy",
+      "reason": "Modern build tools are preferred",
+      "modernAlternative": "npm-scripts",
+      "notes": "Consider npm scripts, webpack, or vite"
+    }
+  },
+  "securityAlerts": [
+    {
+      "package": "express",
+      "affectedVersions": "< 4.17.3",
+      "severity": "high",
+      "cve": "CVE-2022-24999",
+      "description": "Open redirect vulnerability"
+    },
+    {
+      "package": "lodash",
+      "affectedVersions": "< 4.17.21",
+      "severity": "high",
+      "cve": "CVE-2021-23337",
+      "description": "Command injection vulnerability"
+    },
+    {
+      "package": "moment",
+      "affectedVersions": "< 2.29.2",
+      "severity": "high",
+      "cve": "CVE-2022-24785",
+      "description": "Path traversal vulnerability"
+    }
+  ]
+}

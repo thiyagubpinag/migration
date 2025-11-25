@@ -1,0 +1,25 @@
+{
+  "name": "ibm-code-analyzer",
+  "version": "1.0.0",
+  "description": "IBM Code Analyzer - Detects legacy patterns and generates modernization recommendations",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "analyze": "node src/index.js ../legacy-codebase",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "code-analysis",
+    "modernization",
+    "migration",
+    "ibm-standards"
+  ],
+  "author": "IBM Migration Team",
+  "license": "ISC",
+  "dependencies": {
+    "semver": "^7.5.4",
+    "chalk": "^5.3.0",
+    "glob": "^10.3.10"
+  }
+}

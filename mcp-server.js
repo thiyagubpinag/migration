@@ -12,14 +12,14 @@ import dotenv from "dotenv";
 dotenv.config();
 
 /**
- * MCP Server for Watsonx LLM
- * Implements the Model Context Protocol to expose Watsonx LLM tool
+ * MCP Server for IBM Tools
+ * Implements the Model Context Protocol to expose Watsonx LLM and Code Analyzer tools
  */
-class WatsonxLLMServer {
+class IBMToolsServer {
   constructor() {
     this.server = new Server(
       {
-        name: "watsonx-llm",
+        name: "ibm-tools",
         version: "1.0.0",
       },
       {
@@ -58,6 +58,46 @@ class WatsonxLLMServer {
               },
             },
           },
+          {
+            name: "analyze_legacy_code",
+            description: "Analyzes legacy JavaScript code for modernization opportunities. Detects outdated dependencies, deprecated packages, legacy patterns (var, callbacks, etc.), and generates IBM-compliant modernization rules with AI prompts.",
+            inputSchema: {
+              type: "object",
+              properties: {
+                projectPath: {
+                  type: "string",
+                  description: "Absolute or relative path to the legacy project directory to analyze",
+                },
+                ibmStandardsPath: {
+                  type: "string",
+                  description: "Path to IBM standards folder (optional, defaults to example-migration-project/ibm-standards)",
+                },
+                includeAIPrompts: {
+                  type: "boolean",
+                  description: "Whether to include AI migration prompts in the output (default: true)",
+                },
+              },
+              required: ["projectPath"],
+            },
+          },
+          {
+            name: "get_modernization_rule",
+            description: "Get detailed information about a specific modernization rule including examples, affected files, and migration steps.",
+            inputSchema: {
+              type: "object",
+              properties: {
+                ruleId: {
+                  type: "string",
+                  description: "The ID of the modernization rule to retrieve",
+                },
+                projectPath: {
+                  type: "string",
+                  description: "Path to the project (required for pattern rules to show file locations)",
+                },
+              },
+              required: ["ruleId", "projectPath"],
+            },
+          },
         ],
       };
     });
@@ -79,15 +119,26 @@ class WatsonxLLMServer {
           }, timeoutMs);
         });
 
-        // Create tool instance with custom config if modelId provided
-        const config = args?.modelId ? { modelId: args.modelId } : {};
-        const tool = createTool('watsonx_llm', config);
+        let result;
 
-        // Execute the tool with timeout
-        const executionPromise = tool.execute(args?.params || args || {});
-        
-        // Race between execution and timeout
-        const result = await Promise.race([executionPromise, timeoutPromise]);
+        // Route to appropriate tool
+        if (name === 'watsonx_llm_call') {
+          // Create tool instance with custom config if modelId provided
+          const config = args?.modelId ? { modelId: args.modelId } : {};
+          const tool = createTool('watsonx_llm', config);
+          const executionPromise = tool.execute(args?.params || args || {});
+          result = await Promise.race([executionPromise, timeoutPromise]);
+        } else if (name === 'analyze_legacy_code') {
+          const tool = tools.analyze_legacy_code;
+          const executionPromise = tool.execute(args || {});
+          result = await Promise.race([executionPromise, timeoutPromise]);
+        } else if (name === 'get_modernization_rule') {
+          const tool = tools.get_modernization_rule;
+          const executionPromise = tool.execute(args || {});
+          result = await Promise.race([executionPromise, timeoutPromise]);
+        } else {
+          throw new Error(`Unknown tool: ${name}`);
+        }
 
         console.error(`[MCP] Tool ${name} completed successfully`);
 
@@ -133,12 +184,13 @@ class WatsonxLLMServer {
   async run() {
     const transport = new StdioServerTransport();
     await this.server.connect(transport);
-    console.error("Watsonx LLM MCP Server running on stdio");
+    console.error("IBM Tools MCP Server running on stdio");
+    console.error("Available tools: watsonx_llm_call, analyze_legacy_code, get_modernization_rule");
   }
 }
 
 // Start the server
-const server = new WatsonxLLMServer();
+const server = new IBMToolsServer();
 server.run().catch((error) => {
   console.error("Server error:", error);
   process.exit(1);
