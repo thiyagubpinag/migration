@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "ibm-tools": {
+      "command": "node",
+      "args": ["/Users/thiyaguseran/Desktop/migration/mcp-server.js"],
+      "env": {
+        "MCP_TIMEOUT": "300000"
+      }
+    }
+  }
+}
