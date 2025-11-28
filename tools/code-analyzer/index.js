@@ -22,8 +22,7 @@ export class CodeAnalyzer {
   /**
    * Execute code analysis
    * @param {Object} params - Parameters
-   * @param {string} params.javaCode - Java source code to analyze
-   * @param {string} params.filePath - File path (optional)
+   * @param {string} params.filePath - File path to Java source code (required)
    * @param {Object} params.guidelines - Pre-loaded guidelines (optional)
    * @returns {Promise<Object>} Analysis results with detected issues
    */
@@ -31,11 +30,16 @@ export class CodeAnalyzer {
     try {
       console.log('\n🔍 Code Analyzer: Starting analysis...\n');
 
-      const { javaCode, filePath = 'unknown.java', guidelines } = params;
+      const { filePath, guidelines } = params;
 
-      if (!javaCode) {
-        throw new Error('javaCode parameter is required');
+      if (!filePath) {
+        throw new Error('filePath parameter is required');
       }
+
+      // Read Java code from file
+      console.log(`📖 Reading file: ${filePath}`);
+      const javaCode = await fs.readFile(filePath, 'utf-8');
+      console.log(`✓ File read successfully (${javaCode.length} characters)\n`);
 
       // Load guidelines if not provided
       const guidelineData = guidelines || await this.loadGuidelines();
@@ -501,8 +505,7 @@ export class CodeAnalyzer {
       description: 'Analyzes Java code against guidelines and detects issues',
       version: '1.0.0',
       parameters: {
-        javaCode: 'String - Java source code to analyze (required)',
-        filePath: 'String - File path for reporting (optional)',
+        filePath: 'String - File path to Java source code (required)',
         guidelines: 'Object - Pre-loaded guidelines (optional)'
       }
     };
