@@ -58,8 +58,7 @@ async function runCompleteMigration() {
 
     const analyzer = new CodeAnalyzer();
     const analysisResult = await analyzer.execute({
-      javaCode,
-      filePath: 'UserService.java',
+      filePath: legacyCodePath,
       guidelines: guidelinesResult.guidelines
     });
 

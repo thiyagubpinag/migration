@@ -1,0 +1,284 @@
+{
+  "language": "Java",
+  "generated_at": "2025-11-28T15:20:31.869Z",
+  "java_version": {
+    "current_version": "17",
+    "recommended_version": "21",
+    "breaking_changes": [
+      {
+        "pattern": {},
+        "replacement": "Alternative security mechanisms",
+        "reason": "Deprecated for removal"
+      }
+    ],
+    "new_features": [
+      {
+        "feature": "Virtual Threads",
+        "description": "Lightweight threads",
+        "example": "Thread.ofVirtual().start(() -> {})"
+      },
+      {
+        "feature": "Pattern Matching for switch",
+        "description": "Enhanced switch expressions",
+        "example": "switch(obj) { case String s -> ... }"
+      },
+      {
+        "feature": "Record Patterns",
+        "description": "Destructuring records",
+        "example": "case Point(int x, int y) -> ..."
+      },
+      {
+        "feature": "Sequenced Collections",
+        "description": "Collections with defined order",
+        "example": "list.reversed()"
+      }
+    ]
+  },
+  "coding_guidelines": [
+    {
+      "category": "naming",
+      "rule": "Use meaningful names",
+      "description": "Class names should be nouns, method names should be verbs",
+      "severity": "warning",
+      "example_bad": "class Data { void process() {} }",
+      "example_good": "class UserAccount { void validateCredentials() {} }"
+    },
+    {
+      "category": "naming",
+      "rule": "Follow naming conventions",
+      "description": "Classes: PascalCase, methods/variables: camelCase, constants: UPPER_SNAKE_CASE",
+      "severity": "warning",
+      "example_bad": "class user_account { int MAX_value = 100; }",
+      "example_good": "class UserAccount { int MAX_VALUE = 100; }"
+    },
+    {
+      "category": "design",
+      "rule": "Favor composition over inheritance",
+      "description": "Use composition to achieve code reuse instead of inheritance",
+      "severity": "info",
+      "example_bad": "class Stack extends ArrayList {}",
+      "example_good": "class Stack { private List items = new ArrayList(); }"
+    },
+    {
+      "category": "design",
+      "rule": "Program to interfaces",
+      "description": "Use interface types for parameters and return values",
+      "severity": "warning",
+      "example_bad": "ArrayList<String> getUsers()",
+      "example_good": "List<String> getUsers()"
+    },
+    {
+      "category": "performance",
+      "rule": "Use StringBuilder for string concatenation",
+      "description": "Avoid string concatenation in loops",
+      "severity": "warning",
+      "example_bad": "for(String s : list) result += s;",
+      "example_good": "StringBuilder sb = new StringBuilder(); for(String s : list) sb.append(s);"
+    },
+    {
+      "category": "security",
+      "rule": "Never store passwords in plain text",
+      "description": "Use secure hashing algorithms for passwords",
+      "severity": "critical",
+      "example_bad": "String password = \"admin123\";",
+      "example_good": "Use environment variables or secure vault"
+    },
+    {
+      "category": "maintainability",
+      "rule": "Keep methods small",
+      "description": "Methods should do one thing and do it well",
+      "severity": "info",
+      "example_bad": "Method with 100+ lines",
+      "example_good": "Method with 10-20 lines, extracted helper methods"
+    },
+    {
+      "category": "maintainability",
+      "rule": "Use try-with-resources",
+      "description": "Automatically close resources",
+      "severity": "error",
+      "example_bad": "FileInputStream fis = new FileInputStream(file); try { ... } finally { fis.close(); }",
+      "example_good": "try (FileInputStream fis = new FileInputStream(file)) { ... }"
+    }
+  ],
+  "deprecated_patterns": [
+    {
+      "pattern": "/SecurityManager/",
+      "deprecated_in": "17",
+      "removed_in": "21",
+      "replacement": "Alternative security mechanisms",
+      "migration_guide": "Deprecated for removal"
+    }
+  ],
+  "security_rules": [
+    {
+      "rule_id": "SEC-001",
+      "title": "SQL Injection Prevention",
+      "description": "Always use PreparedStatement for SQL queries",
+      "severity": "critical",
+      "cwe_id": "CWE-89",
+      "owasp_category": "A03:2021 – Injection",
+      "remediation": "Use PreparedStatement with parameterized queries"
+    },
+    {
+      "rule_id": "SEC-002",
+      "title": "Hardcoded Credentials",
+      "description": "Never hardcode passwords or API keys",
+      "severity": "critical",
+      "cwe_id": "CWE-798",
+      "owasp_category": "A07:2021 – Identification and Authentication Failures",
+      "remediation": "Use environment variables or secure vault services"
+    },
+    {
+      "rule_id": "SEC-003",
+      "title": "Weak Cryptography",
+      "description": "Avoid weak cryptographic algorithms",
+      "severity": "high",
+      "cwe_id": "CWE-327",
+      "owasp_category": "A02:2021 – Cryptographic Failures",
+      "remediation": "Use AES-256, SHA-256 or stronger algorithms"
+    },
+    {
+      "rule_id": "SEC-004",
+      "title": "Insecure Random",
+      "description": "Use SecureRandom for security-sensitive operations",
+      "severity": "medium",
+      "cwe_id": "CWE-330",
+      "owasp_category": "A02:2021 – Cryptographic Failures",
+      "remediation": "Replace Random with SecureRandom"
+    },
+    {
+      "rule_id": "SEC-005",
+      "title": "Path Traversal",
+      "description": "Validate and sanitize file paths",
+      "severity": "high",
+      "cwe_id": "CWE-22",
+      "owasp_category": "A01:2021 – Broken Access Control",
+      "remediation": "Use Path.normalize() and validate against whitelist"
+    }
+  ],
+  "performance_patterns": [
+    {
+      "pattern": "String concatenation in loop",
+      "issue": "Creates many intermediate String objects",
+      "optimization": "Use StringBuilder",
+      "impact": "high"
+    },
+    {
+      "pattern": "ArrayList with known size",
+      "issue": "Multiple array resizing operations",
+      "optimization": "Initialize with capacity: new ArrayList<>(expectedSize)",
+      "impact": "medium"
+    },
+    {
+      "pattern": "Repeated regex compilation",
+      "issue": "Pattern compilation is expensive",
+      "optimization": "Compile Pattern once and reuse",
+      "impact": "medium"
+    },
+    {
+      "pattern": "Boxing/unboxing in loops",
+      "issue": "Unnecessary object creation",
+      "optimization": "Use primitive types where possible",
+      "impact": "medium"
+    },
+    {
+      "pattern": "Inefficient collection operations",
+      "issue": "O(n) operations in loops",
+      "optimization": "Use appropriate data structures (HashMap, HashSet)",
+      "impact": "high"
+    }
+  ],
+  "modernization_rules": [
+    {
+      "from_pattern": "Anonymous class implementing functional interface",
+      "to_pattern": "Lambda expression",
+      "java_version": "1.8",
+      "benefits": [
+        "More concise",
+        "Better readability",
+        "Functional programming"
+      ],
+      "example": {
+        "before": "new Runnable() { public void run() { System.out.println(\"Hello\"); } }",
+        "after": "() -> System.out.println(\"Hello\")"
+      }
+    },
+    {
+      "from_pattern": "for loop with collection",
+      "to_pattern": "Stream API",
+      "java_version": "1.8",
+      "benefits": [
+        "Declarative",
+        "Parallel processing",
+        "Functional operations"
+      ],
+      "example": {
+        "before": "for (String s : list) { if (s.length() > 5) result.add(s); }",
+        "after": "list.stream().filter(s -> s.length() > 5).collect(Collectors.toList())"
+      }
+    },
+    {
+      "from_pattern": "Explicit type declaration",
+      "to_pattern": "var keyword",
+      "java_version": "11",
+      "benefits": [
+        "Less verbose",
+        "Improved readability"
+      ],
+      "example": {
+        "before": "ArrayList<String> list = new ArrayList<String>();",
+        "after": "var list = new ArrayList<String>();"
+      }
+    },
+    {
+      "from_pattern": "Data class with boilerplate",
+      "to_pattern": "Record",
+      "java_version": "17",
+      "benefits": [
+        "Immutable",
+        "Less boilerplate",
+        "Built-in equals/hashCode/toString"
+      ],
+      "example": {
+        "before": "class Point { private final int x, y; Point(int x, int y) { this.x = x; this.y = y; } }",
+        "after": "record Point(int x, int y) {}"
+      }
+    },
+    {
+      "from_pattern": "Thread creation",
+      "to_pattern": "Virtual threads",
+      "java_version": "21",
+      "benefits": [
+        "Lightweight",
+        "Better scalability",
+        "Simplified concurrency"
+      ],
+      "example": {
+        "before": "new Thread(() -> task()).start();",
+        "after": "Thread.ofVirtual().start(() -> task());"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "name": "Oracle Java SE Documentation",
+      "url": "https://docs.oracle.com/en/java/javase/",
+      "fetched_at": "2025-11-28T15:20:31.870Z"
+    },
+    {
+      "name": "OpenJDK JEPs",
+      "url": "https://openjdk.org/jeps/",
+      "fetched_at": "2025-11-28T15:20:31.870Z"
+    },
+    {
+      "name": "OWASP Java Security",
+      "url": "https://owasp.org/www-project-java-security/",
+      "fetched_at": "2025-11-28T15:20:31.870Z"
+    },
+    {
+      "name": "Effective Java Principles",
+      "url": "https://github.com/HugoMatilla/Effective-JAVA-Summary",
+      "fetched_at": "2025-11-28T15:20:31.870Z"
+    }
+  ]
+}
