@@ -85,23 +85,50 @@ export class CodeRecommendation {
   }
 
   /**
-   * Generate recommendations using Watsonx AI
+   * Generate recommendations using Watsonx AI with streaming
    */
   async generateRecommendations(javaCode, analysisRules, guidelines, targetVersion) {
-    console.log('🔄 Generating recommendations with Watsonx AI...');
+    console.log('🔄 Generating recommendations with Watsonx AI (streaming)...');
 
     // Prepare the prompt for Watsonx
     const systemPrompt = this.buildSystemPrompt(guidelines, targetVersion);
     const userPrompt = this.buildUserPrompt(javaCode, analysisRules);
 
-    // Call Watsonx AI
+    // Call Watsonx AI with streaming
     const messages = [
       new SystemMessage(systemPrompt),
       new HumanMessage(userPrompt)
     ];
 
-    const response = await this.model.invoke(messages);
-    const aiResponse = response.content;
+    let aiResponse = '';
+    let chunkCount = 0;
+
+    try {
+      // Stream the response
+      const stream = await this.model.stream(messages);
+      
+      console.log('\n📡 Streaming response from Watsonx AI...\n');
+      
+      for await (const chunk of stream) {
+        const content = chunk.content;
+        if (content) {
+          aiResponse += content;
+          chunkCount++;
+          
+          // Show progress every 10 chunks
+          if (chunkCount % 10 === 0) {
+            process.stdout.write('.');
+          }
+        }
+      }
+      
+      console.log(`\n\n✅ Received ${chunkCount} chunks (${aiResponse.length} characters)\n`);
+    } catch (error) {
+      console.error('❌ Streaming error, falling back to non-streaming:', error.message);
+      // Fallback to non-streaming if streaming fails
+      const response = await this.model.invoke(messages);
+      aiResponse = response.content;
+    }
 
     // Parse AI response into structured recommendations
     const recommendations = this.parseAIResponse(aiResponse, analysisRules);
@@ -115,22 +142,14 @@ export class CodeRecommendation {
   buildSystemPrompt(guidelines, targetVersion) {
     return `You are an expert Java migration assistant specializing in modernizing legacy Java code to Java ${targetVersion}.
 
-Your task is to analyze Java code issues and provide:
-1. **Updated Code**: Complete, modernized Java code with all fixes applied
-2. **Migration Steps**: Step-by-step instructions for each change
-3. **Dependency Updates**: Any required dependency changes
-4. **Breaking Changes**: List of breaking changes and how to handle them
-5. **Security Fixes**: Security improvements applied
-6. **Performance Optimizations**: Performance enhancements made
-7. **Diff/Patch**: Unified diff format showing changes
+Your task is to analyze Java code issues and provide modernized code with key recommendations.
 
 **Java Guidelines to Follow:**
 ${this.formatGuidelines(guidelines)}
 
 **Target Java Version:** ${targetVersion}
 
-**Output Format:**
-Provide your response in the following JSON structure:
+**Output Format (JSON):**
 {
   "updated_code": "Complete modernized Java code",
   "migration_steps": [
@@ -139,50 +158,17 @@ Provide your response in the following JSON structure:
       "title": "Step title",
       "description": "What to do",
       "code_before": "Old code snippet",
-      "code_after": "New code snippet",
-      "effort": "time estimate",
-      "breaking": false
+      "code_after": "New code snippet"
     }
   ],
-  "dependency_updates": [
-    {
-      "type": "maven|gradle",
-      "before": "old dependency",
-      "after": "new dependency",
-      "reason": "why update"
-    }
-  ],
-  "breaking_changes": [
-    {
-      "change": "Description",
-      "impact": "What breaks",
-      "mitigation": "How to fix"
-    }
-  ],
-  "security_fixes": [
-    {
-      "issue": "Security issue",
-      "fix": "How it was fixed",
-      "severity": "critical|high|medium|low"
-    }
-  ],
-  "performance_optimizations": [
-    {
-      "optimization": "What was optimized",
-      "benefit": "Performance benefit",
-      "impact": "high|medium|low"
-    }
-  ],
-  "diff": "Unified diff format",
   "summary": {
     "total_changes": 0,
-    "lines_modified": 0,
     "estimated_effort": "time estimate",
     "risk_level": "low|medium|high"
   }
 }
 
-Be thorough, precise, and ensure all code is production-ready.`;
+Focus on the most critical changes. Be concise and production-ready.`;
   }
 
   /**

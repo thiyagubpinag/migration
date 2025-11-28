@@ -42,8 +42,9 @@ export function createWatsonxModel(customConfig = {}) {
     watsonxAIAuthType: "iam",
     watsonxAIApikey: config.apiKey,
     model: config.modelId,
-    maxTokens: 4096,
-    temperature: 0,
+    maxTokens: 2048, // Reduced from 4096 for faster responses
+    temperature: 0.3, // Increased from 0 for faster generation
+    streaming: true, // Enable streaming support
   });
 }
 
