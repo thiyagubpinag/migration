@@ -1,0 +1,225 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Java Migration Guidelines Schema",
+  "description": "Unified schema for Java language migration guidelines",
+  "type": "object",
+  "properties": {
+    "language": {
+      "type": "string",
+      "const": "Java"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "java_version": {
+      "type": "object",
+      "properties": {
+        "current_version": {
+          "type": "string",
+          "description": "Detected current Java version"
+        },
+        "recommended_version": {
+          "type": "string",
+          "description": "Recommended target Java version"
+        },
+        "breaking_changes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "api": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "reason": {
+                "type": "string"
+              },
+              "replacement": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "new_features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "feature": {
+                "type": "string"
+              },
+              "version": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "example": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "required": ["current_version", "recommended_version"]
+    },
+    "coding_guidelines": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": ["naming", "formatting", "design", "performance", "security", "maintainability"]
+          },
+          "rule": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["info", "warning", "error", "critical"]
+          },
+          "example_bad": {
+            "type": "string"
+          },
+          "example_good": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "deprecated_patterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string"
+          },
+          "deprecated_in": {
+            "type": "string"
+          },
+          "removed_in": {
+            "type": "string"
+          },
+          "replacement": {
+            "type": "string"
+          },
+          "migration_guide": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "security_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "rule_id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["low", "medium", "high", "critical"]
+          },
+          "cwe_id": {
+            "type": "string"
+          },
+          "owasp_category": {
+            "type": "string"
+          },
+          "remediation": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "performance_patterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "pattern": {
+            "type": "string"
+          },
+          "issue": {
+            "type": "string"
+          },
+          "optimization": {
+            "type": "string"
+          },
+          "impact": {
+            "type": "string",
+            "enum": ["low", "medium", "high"]
+          }
+        }
+      }
+    },
+    "modernization_rules": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from_pattern": {
+            "type": "string"
+          },
+          "to_pattern": {
+            "type": "string"
+          },
+          "java_version": {
+            "type": "string"
+          },
+          "benefits": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "example": {
+            "type": "object",
+            "properties": {
+              "before": {
+                "type": "string"
+              },
+              "after": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "fetched_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  },
+  "required": ["language", "generated_at", "java_version"]
+}

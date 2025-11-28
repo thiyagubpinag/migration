@@ -149,79 +149,235 @@ return new ChatWatsonx({
 ```
 ## 💬 Using with Roo Chat
 
-### Interactive Migration via Chat
+### Getting Started with Chat
 
-The easiest way to use this tool is through Roo Chat:
+The easiest way to use this tool is through Roo Chat's natural language interface:
 
 1. **Open Roo Chat** in your IDE (VSCode/Cursor)
 2. **Switch to Migration Mode**: Type `/mode migration`
-3. **Start chatting naturally**:
+3. **Start asking questions naturally** - no special syntax required!
+
+### 📋 How to Ask Questions in Chat
+
+#### **Basic Question Patterns**
+
+You can ask questions in natural language. Here are effective patterns:
+
+**Scanning & Analysis:**
+```
+✅ "Scan my legacy user service"
+✅ "Analyze the code in examples/legacy-code/"
+✅ "What issues are in UserService.java?"
+✅ "Check my database connector for problems"
+✅ "Show me all security issues in the codebase"
+```
+
+**Getting Recommendations:**
+```
+✅ "What should I fix first?"
+✅ "Give me AI recommendations for user-service.js"
+✅ "How do I modernize this code?"
+✅ "What's the migration plan?"
+✅ "Show me IBM-approved patterns for this"
+```
+
+**Previewing Changes:**
+```
+✅ "What will change if I migrate?"
+✅ "Show me a preview of the transformations"
+✅ "Can I see the diff before applying?"
+✅ "What's the impact of these changes?"
+```
+
+**Applying Migrations:**
+```
+✅ "Apply the migration"
+✅ "Migrate user-service.js to modern code"
+✅ "Transform this file using IBM standards"
+✅ "Fix all the issues you found"
+```
+
+**Specific Requests:**
+```
+✅ "Convert callbacks to async/await"
+✅ "Remove hardcoded credentials"
+✅ "Add error handling"
+✅ "Implement connection pooling"
+✅ "Add input validation"
+```
+
+#### **💡 Tips for Better Results**
+
+1. **Be Specific About Files:**
+   - ✅ "Scan examples/legacy-code/UserService.java"
+   - ❌ "Scan the code" (too vague)
+
+2. **Ask One Thing at a Time:**
+   - ✅ "Scan the code" → wait for results → "Show recommendations"
+   - ❌ "Scan the code and show recommendations and apply changes" (too much at once)
+
+3. **Use Context from Previous Responses:**
+   - ✅ "Yes, apply those changes" (after seeing preview)
+   - ✅ "Show me more details about issue #3"
+
+4. **Ask for Clarification:**
+   - ✅ "What does 'callback hell' mean?"
+   - ✅ "Why is this a security issue?"
+   - ✅ "What's the benefit of connection pooling?"
+
+5. **Request Different Formats:**
+   - ✅ "Show me a summary"
+   - ✅ "Give me detailed explanations"
+   - ✅ "List the changes as bullet points"
+
+### 🎯 Complete Chat Workflow Example
+
+Here's a typical conversation flow:
 
 ```
-You: "Scan my legacy user service and show me what needs to be fixed"
+You: "Scan examples/legacy-code/UserService.java"
 
 Roo: [Analyzes code using migration tool]
 ✅ Scan completed successfully
 
 Summary:
-  - File: legacy-code/user-service.js
+  - File: examples/legacy-code/UserService.java
   - Total Issues: 15
   - Critical Issues: 2 (security)
   - Error Issues: 8 (functionality)
   - Priority Score: 75/100 (high urgency)
 
+Top Issues:
+  1. Hardcoded database credentials (CRITICAL)
+  2. SQL injection vulnerability (CRITICAL)
+  3. No connection pooling (ERROR)
+
 Would you like AI-powered recommendations?
 
-You: "Yes, show me the recommendations"
+---
+
+You: "Yes, what should I do about the security issues?"
 
 Roo: [Generates AI recommendations using Watsonx]
-🤖 Migration Plan Generated
+🤖 Security Recommendations:
 
-Priority Steps:
-  1. Remove hardcoded credentials (30 min)
-  2. Convert to ES6 modules (1 hour)
-  3. Modernize async patterns (2-3 hours)
-  ...
+1. **Remove Hardcoded Credentials** (30 min, HIGH priority)
+   - Move to environment variables
+   - Use IBM Secrets Manager
+   - Example: System.getenv("DB_PASSWORD")
 
-Total effort: 1-2 days
-Breaking changes: 3
+2. **Fix SQL Injection** (1 hour, CRITICAL priority)
+   - Use PreparedStatement instead of Statement
+   - Parameterize all queries
+   - Example: "SELECT * FROM users WHERE id = ?"
 
-Would you like to preview the changes?
+Would you like to see the full migration plan?
 
-You: "Yes, show me the preview"
+---
+
+You: "Show me what will change in the code"
 
 Roo: [Runs dry-run migration]
 🔍 Preview of Changes:
-  - 8 transformations
-  - 45 lines to change
-  
-Key changes:
-  var → const
-  callbacks → async/await
-  hardcoded passwords → env vars
 
-Ready to apply?
+File: UserService.java
+Lines to modify: 45
+
+Key transformations:
+  ✓ Line 12: String password = "admin123"
+    → String password = System.getenv("DB_PASSWORD")
+  
+  ✓ Line 28: Statement stmt = conn.createStatement()
+    → PreparedStatement stmt = conn.prepareStatement(sql)
+  
+  ✓ Line 35: Add connection pooling with HikariCP
+
+Breaking changes: 1 (constructor signature)
+Estimated effort: 2-3 hours
+
+Ready to apply these changes?
+
+---
 
 You: "Yes, apply the migration"
 
 Roo: ✅ Migration complete!
-  - Backup created
-  - 8 changes applied
+  - Backup created: UserService.java.backup
+  - 8 transformations applied
   - 45 lines modified
+  - 0 errors
 
-Next: Run tests?
+Next steps:
+  1. Update .env with DB_PASSWORD
+  2. Add HikariCP dependency to pom.xml
+  3. Run tests to verify changes
+
+Would you like me to help with the next steps?
+
+---
+
+You: "What do I need to add to pom.xml?"
+
+Roo: 📦 Add these dependencies to pom.xml:
+
+<dependency>
+    <groupId>com.zaxxer</groupId>
+    <artifactId>HikariCP</artifactId>
+    <version>5.0.1</version>
+</dependency>
+
+Would you like me to update pom.xml for you?
 ```
 
-### Natural Language Commands
+### 🗣️ Common Chat Commands
 
-Just talk naturally - Roo understands:
-- "Scan the legacy code"
-- "Show me AI recommendations"
-- "What will change?"
-- "Apply the migration"
-- "Run the tests"
+| What You Want | What to Say |
+|---------------|-------------|
+| Start analysis | "Scan [filename]" or "Analyze my code" |
+| Get recommendations | "Show recommendations" or "What should I fix?" |
+| Preview changes | "Show me the preview" or "What will change?" |
+| Apply migration | "Apply the changes" or "Migrate the code" |
+| Get help | "How do I fix [issue]?" or "Explain [concept]" |
+| Check status | "What's the status?" or "Show me the summary" |
+| Undo changes | "Restore the backup" or "Undo the migration" |
 
-See **[ROO_CHAT_QUICKSTART.md](ROO_CHAT_QUICKSTART.md)** for more examples and **[ROO_CHAT_INTEGRATION.md](ROO_CHAT_INTEGRATION.md)** for detailed integration guide.
+### 🎨 Advanced Chat Features
+
+**Multi-file Operations:**
+```
+"Scan all files in examples/legacy-code/"
+"Migrate all Java files to modern standards"
+"Compare legacy-code/ with ibm-modern-code/"
+```
+
+**Conditional Requests:**
+```
+"Only fix critical security issues"
+"Apply changes that don't break the API"
+"Show me issues that take less than 1 hour to fix"
+```
+
+**Explanatory Requests:**
+```
+"Explain why this is a problem"
+"Show me the IBM standard for this pattern"
+"What are the benefits of this change?"
+"Walk me through the migration step by step"
+```
+
+### 📚 Additional Resources
+
+- **[ROO_CHAT_QUICKSTART.md](ROO_CHAT_QUICKSTART.md)** - Quick start guide with examples
+- **[ROO_CHAT_INTEGRATION.md](ROO_CHAT_INTEGRATION.md)** - Detailed integration guide
+- **[MIGRATION_GUIDE.md](MIGRATION_GUIDE.md)** - Complete migration documentation
+
+### 💡 Pro Tips
+
+1. **Start Small**: Begin with one file to understand the process
+2. **Review Previews**: Always check the preview before applying changes
+3. **Use Backups**: Automatic backups are created, but commit to git first
+4. **Ask Questions**: Don't hesitate to ask "why" or request explanations
+5. **Iterate**: You can refine requests based on results
 
 
 ## 🎯 Usage

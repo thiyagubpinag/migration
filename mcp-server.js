@@ -58,6 +58,71 @@ class MigrationToolsServer {
               },
             },
           },
+          {
+            name: "docupilot_agent",
+            description: "Dynamic Java guideline loader - fetches and normalizes Java documentation",
+            inputSchema: {
+              type: "object",
+              properties: {
+                javaCode: {
+                  type: "string",
+                  description: "Java source code to analyze (optional)",
+                },
+                targetVersion: {
+                  type: "string",
+                  description: "Target Java version (optional, defaults to 21)",
+                },
+              },
+            },
+          },
+          {
+            name: "code_analyzer",
+            description: "Analyzes Java code against guidelines and detects issues",
+            inputSchema: {
+              type: "object",
+              properties: {
+                javaCode: {
+                  type: "string",
+                  description: "Java source code to analyze (required)",
+                },
+                filePath: {
+                  type: "string",
+                  description: "File path for reporting (optional)",
+                },
+                guidelines: {
+                  type: "object",
+                  description: "Pre-loaded guidelines (optional)",
+                },
+              },
+              required: ["javaCode"],
+            },
+          },
+          {
+            name: "code_recommendation",
+            description: "Generates AI-powered code recommendations using Watsonx",
+            inputSchema: {
+              type: "object",
+              properties: {
+                javaCode: {
+                  type: "string",
+                  description: "Original Java source code (required)",
+                },
+                analysisRules: {
+                  type: "array",
+                  description: "Rules from code analyzer (required)",
+                },
+                guidelines: {
+                  type: "object",
+                  description: "Java guidelines (optional)",
+                },
+                targetVersion: {
+                  type: "string",
+                  description: "Target Java version (optional, default: 21)",
+                },
+              },
+              required: ["javaCode", "analysisRules"],
+            },
+          },
         ],
       };
     });

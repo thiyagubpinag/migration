@@ -7,7 +7,11 @@
   "scripts": {
     "start": "node index.js",
     "mcp": "node mcp-server.js",
-    "mcp:dev": "node --watch mcp-server.js"
+    "mcp:dev": "node --watch mcp-server.js",
+    "example": "node examples/complete-migration-example.js",
+    "test:docupilot": "node -e \"import('./tools/docupilot-agent/index.js').then(m => new m.DocuPilotAgent().execute({targetVersion: '21'}).then(console.log))\"",
+    "test:analyzer": "node -e \"import('./tools/code-analyzer/index.js').then(m => console.log('Code Analyzer loaded'))\"",
+    "test:recommendation": "node -e \"import('./tools/code-recommendation/index.js').then(m => console.log('Code Recommendation loaded'))\""
   },
   "keywords": [
     "mcp",
@@ -21,8 +25,10 @@
     "@langchain/community": "^0.3.58",
     "@langchain/core": "^0.3.0",
     "@modelcontextprotocol/sdk": "^0.5.0",
-    "langchain": "^0.3.0",
-    "dotenv": "^16.4.5"
-  },
-  "devDependencies": {}
+    "axios": "^1.13.2",
+    "cheerio": "^1.1.2",
+    "dotenv": "^16.4.5",
+    "java-parser": "^3.0.1",
+    "langchain": "^0.3.0"
+  }
 }

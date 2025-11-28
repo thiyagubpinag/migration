@@ -1,5 +1,8 @@
 import dotenv from "dotenv";
 import WatsonxLLMTool from "./tools/watsonx_llm/index.js";
+import DocuPilotAgent from "./tools/docupilot-agent/index.js";
+import CodeAnalyzer from "./tools/code-analyzer/index.js";
+import CodeRecommendation from "./tools/code-recommendation/index.js";
 import { createWatsonxModel } from "./config/model-config.js";
 
 // Load environment variables from .env file
@@ -7,12 +10,15 @@ dotenv.config();
 
 
 /**
- * Main entry point for Watsonx LLM Tool
- * Exports the Watsonx LLM tool for direct interaction with IBM Watsonx
+ * Main entry point for Java Migration Tools
+ * Exports all tools for Java code migration and modernization
  */
 
 export {
-  WatsonxLLMTool
+  WatsonxLLMTool,
+  DocuPilotAgent,
+  CodeAnalyzer,
+  CodeRecommendation
 };
 
 /**
@@ -20,6 +26,9 @@ export {
  */
 export const tools = {
   watsonx_llm: WatsonxLLMTool,
+  docupilot_agent: DocuPilotAgent,
+  code_analyzer: CodeAnalyzer,
+  code_recommendation: CodeRecommendation,
 };
 
 /**
